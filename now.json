@@ -1,0 +1,34 @@
+{
+    "name": "logints",
+    "version": 2,
+    "alias": [
+        "rylogints"
+    ],
+    "env": {
+        "sentrydsn": "@sentry_dsn_typescript_auth",
+        "jwtsigningkey": "@ts_cookie_key"
+    },
+    "builds": [{
+        "src": "/functions/*.ts",
+        "use": "@now/node"
+    }, {
+        "src": "package.json",
+        "use": "@now/static-build",
+        "config": {
+            "distDir": "dist"
+        }
+    }],
+    "routes": [{
+        "src": "/api/(.*)",
+        "dest": "functions/$1.ts",
+        "methods": ["POST", "OPTIONS"]
+    }, {
+        "src": "/api/sentry",
+        "dest": "functions/sentry.ts",
+        "methods": ["GET"]
+    }, {
+        "src": "/",
+        "dest": "/index.html"
+    }],
+    "public": true
+}
