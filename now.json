@@ -6,29 +6,42 @@
     ],
     "env": {
         "sentrydsn": "@sentry_dsn_typescript_auth",
-        "jwtsigningkey": "@ts_cookie_key"
+        "jwtsigningkey": "@ts_cookie_key",
+        "ts_pg_user_faas": "@ts_pg_user_faas",
+        "ts_pg_host_faas": "@ts_pg_host_faas",
+        "ts_pg_dbname_faas": "@ts_pg_dbname_faas",
+        "ts_pg_password_faas": "@ts_pg_password_faas"
     },
-    "builds": [{
-        "src": "/functions/*.ts",
-        "use": "@now/node"
-    }, {
-        "src": "package.json",
-        "use": "@now/static-build",
-        "config": {
-            "distDir": "dist"
+    "builds": [
+        {
+            "src": "/functions/*.ts",
+            "use": "@now/node"
+        },
+        {
+            "src": "package.json",
+            "use": "@now/static-build",
+            "config": {
+                "distDir": "dist"
+            }
         }
-    }],
-    "routes": [{
-        "src": "/api/(.*)",
-        "dest": "functions/$1.ts",
-        "methods": ["POST", "OPTIONS"]
-    }, {
-        "src": "/api/sentry",
-        "dest": "functions/sentry.ts",
-        "methods": ["GET"]
-    }, {
-        "src": "/",
-        "dest": "/index.html"
-    }],
+    ],
+    "routes": [
+        {
+            "src": "/api/userDetails",
+            "dest": "functions/userDetails.ts"
+        },
+        {
+            "src": "/api/(.*)",
+            "dest": "functions/$1.ts",
+            "methods": [
+                "POST",
+                "OPTIONS"
+            ]
+        },
+        {
+            "src": "/",
+            "dest": "/index.html"
+        }
+    ],
     "public": true
 }

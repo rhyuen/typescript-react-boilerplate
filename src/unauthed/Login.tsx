@@ -35,7 +35,7 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
         })
         .catch(e => {
           console.log(e);
-          handleLogin();
+          console.log(e.response.data);
         });
 
       return {

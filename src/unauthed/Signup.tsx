@@ -3,7 +3,7 @@ import Grid from "../Grid";
 import styled from "styled-components";
 import axios from "axios";
 
-interface Props {}
+interface Props { }
 
 const Container = styled.div`
   grid-column: 2;
@@ -12,13 +12,11 @@ const Container = styled.div`
 const Signup: React.FunctionComponent<{}> = () => {
   const [formValues, updateFormValues] = React.useState({
     email: "",
+    first_name: "",
+    last_name: "",
     password: "",
     confirmation: ""
   });
-
-  if ((Math.random() * 200) % 2 === 0) {
-    throw new Error("I am a cat.");
-  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,6 +35,8 @@ const Signup: React.FunctionComponent<{}> = () => {
     axios
       .post("/api/signup", {
         email: formValues.email,
+        first_name: formValues.first_name,
+        last_name: formValues.last_name,
         password: formValues.password
       })
       .then(res => {
@@ -45,6 +45,8 @@ const Signup: React.FunctionComponent<{}> = () => {
           return {
             ...prev,
             email: "",
+            first_name: "",
+            last_name: "",
             password: "",
             confirmation: ""
           };
@@ -52,6 +54,7 @@ const Signup: React.FunctionComponent<{}> = () => {
       })
       .catch(e => {
         console.log(e);
+        console.log(e.response.data);
       });
   };
 
@@ -66,6 +69,22 @@ const Signup: React.FunctionComponent<{}> = () => {
             placeholder="email"
             onChange={handleInputChange}
             value={formValues.email}
+          />
+          <br />
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First name"
+            onChange={handleInputChange}
+            value={formValues.first_name}
+          />
+          <br />
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            onChange={handleInputChange}
+            value={formValues.last_name}
           />
           <br />
           <input

@@ -41,17 +41,6 @@ module.exports = {
             inject: "body",
             title: "Front End Boilerplate Project"
         }),
-        new CopyWebpackPlugin([{
-            from: "./src/images/*.ico",
-            flatten: true,
-            test: /\.(ico)$/,
-            ignore: ["*.jsx"],
-            toType: "file"
-
-        }], {
-            debug: "debug",
-            copyUnmodified: true
-        }),
         new ForkTsCheckerWebpackPlugin()
     ]
 };
