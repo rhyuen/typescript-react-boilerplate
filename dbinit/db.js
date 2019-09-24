@@ -38,11 +38,11 @@ exports.query = (text, params) => {
                 resolve(res);
             })
             .catch(e => {
-                console.log("ERROR");
+                console.log("ERROR in DB Conn.");
                 console.log(e);
             })
             .then(() => {
-                console.log("killing con");
+                console.log(`[${new Date().toLocaleString()}]: Killing DBConn`);
                 client.end();
             });
     });

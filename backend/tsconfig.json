@@ -1,7 +1,5 @@
 {
     "compilerOptions": {
-        "jsx": "react",
-        "outDir": "./dist/",
         "target": "es2015",
         "module": "commonjs",
         "moduleResolution": "node",
@@ -17,9 +15,7 @@
             "node"
         ]
     },
-    "include": [
-        // "./src/**/*"
-    ],
+    "include": [],
     "exclude": [
         "/node_modules/",
         "/dist"

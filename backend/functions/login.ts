@@ -1,5 +1,6 @@
 import { NowRequest, NowResponse } from "@now/node";
 import { query } from "./db/index";
+import getEnv from "./mw/getEnv";
 import Cookies from "cookies";
 import * as Sentry from "@sentry/node";
 import * as jwt from "jsonwebtoken";
@@ -56,7 +57,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     }
 
     const result: any = await query(
-      "select email, password from users where email = $1",
+      "select user_id, email, password from users where email = $1",
       [email]
     );
 
@@ -77,13 +78,16 @@ export default async (req: NowRequest, res: NowResponse) => {
       });
     }
 
-    const payload = { message: "I am a payload" };
+    const payload = { user: result.rows[0].email, scope: "All" };
     const token = await jwt.sign(payload, process.env.jwtsigningkey, {
       algorithm: "HS256"
     });
 
-    const currentCookie = new Cookies(req, res, { keys: ["key is here"] });
-    currentCookie.set("token", token);
+    // const currentCookie = new Cookies(req, res, { keys: ["key is here"] });
+    // currentCookie.set("token", token);
+
+    setCookie(req, res, "login", token)
+
 
     return res.status(200).json({
       message: `Your email is '${email}' and your password is '${password}'.`,
@@ -91,12 +95,25 @@ export default async (req: NowRequest, res: NowResponse) => {
     });
   } catch (e) {
     console.log(`Error Handler for Login.ts: DETAILS: ${e}`);
-    console.log(e.message);
-    console.log(e.lineNumber);
-    console.log(e.stack);
     return res.status(500).json({
       message: "Something has gone wrong.",
       description: e
     });
   }
+};
+
+
+function setCookie(req: NowRequest, res: NowResponse, name: string, value: string) {
+  const signingKey = getEnv('jwtsigningkey');
+  const cookies = new Cookies(req, res, {
+    keys: [signingKey]
+  });
+  const options = {
+    signed: true,
+    secure: false,
+    httpOnly: true,
+    path: "/",
+    maxAge: 3000000
+  };
+  cookies.set(name, value, options);
 };

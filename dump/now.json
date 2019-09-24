@@ -14,7 +14,7 @@
     },
     "builds": [
         {
-            "src": "/functions/*.ts",
+            "src": "/backend/functions/*.ts",
             "use": "@now/node"
         },
         {

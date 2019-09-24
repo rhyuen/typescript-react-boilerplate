@@ -81,14 +81,14 @@
   },
   "scripts": {
     "start": "npm run build",
-    "build": "webpack --config webpack.config.prod.js",
+    "build": "webpack --config frontend/webpack.config.prod.js",
     "dev:hot": "npm run dev -- --hot",
-    "now-dev": "now dev",
-    "format": "prettier --write \"src/*.{js,jsx,css,json}\" ",
-    "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "format": "prettier --write \"frontend/src/*.{js,jsx,css,json}\" ",
+    "lint": "eslint \"frontend/src/**/*.{js,jsx}\"",
     "test": "jest --watch",
     "type-check": "tsc --noEmit",
-    "now-build": "npm run build",
+    "fed": "now dev --listen 9000 -A now.fed.json",
+    "bed": "npm run build && now dev --listen 9000 -A now.bed.json",
     "dbinit": "node ./dbinit/initializetables.js"
   }
 }

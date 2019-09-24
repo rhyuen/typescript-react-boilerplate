@@ -1,0 +1,47 @@
+{
+    "name": "logints",
+    "version": 2,
+    "alias": [
+        "rylogints"
+    ],
+    "env": {
+        "sentrydsn": "@sentry_dsn_typescript_auth",
+        "jwtsigningkey": "@ts_cookie_key",
+        "ts_pg_user_faas": "@ts_pg_user_faas",
+        "ts_pg_host_faas": "@ts_pg_host_faas",
+        "ts_pg_dbname_faas": "@ts_pg_dbname_faas",
+        "ts_pg_password_faas": "@ts_pg_password_faas"
+    },
+    "builds": [
+        {
+            "src": "/functions/*.ts",
+            "use": "@now/node"
+        },
+        {
+            "src": "package.json",
+            "use": "@now/static-build",
+            "config": {
+                "distDir": "dist"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/userDetails",
+            "dest": "/backend/functions/userDetails.ts"
+        },
+        {
+            "src": "/api/(.*)",
+            "dest": "/backend/functions/$1.ts",
+            "methods": [
+                "POST",
+                "OPTIONS"
+            ]
+        },
+        {
+            "src": "/",
+            "dest": "/index.html"
+        }
+    ],
+    "public": true
+}
