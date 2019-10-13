@@ -3,10 +3,8 @@ import { logger } from "./mw/sentry";
 import { query } from "./db/index";
 import * as Auth from "./mw/auth";
 
-interface PostResult {
-    name: string;
-    content: string;
-    created_at: Date;
+interface FriendResult {
+
 }
 
 module.exports = async (req: NowRequest, res: NowResponse) => {
@@ -21,26 +19,18 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
 
         const { user_id } = await Auth.getFromToken(req);
 
-
-
-        const getPersonalPosts = `
-            select name, content, created_at 
-            from posts            
-            where user_id = $1
+        const getFriends = `
+            select * 
+            from friends            
+            where friender_id = $1 or friendee_id = $1;
         `;
-        const { rows }: any = await query(getPersonalPosts, [user_id]);
+        const { rows }: any = await query(getFriends, [user_id]);
 
-        const payload = rows.map((r: PostResult) => {
-            return {
-                name: r.name,
-                content: r.content,
-                created_at: r.created_at
-            };
-        });
+        const payload = rows.map((r: any) => r);
 
         return res.status(200).json({
             payload
-        })
+        });
     } catch (e) {
         console.log(e);
         return res.status(500).json({

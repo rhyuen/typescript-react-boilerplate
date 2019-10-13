@@ -1,4 +1,5 @@
 import { NowRequest, NowResponse } from "@now/node";
+import { AuthZToken } from './types/index';
 import { query } from "./db/index";
 import getEnv from "./mw/getEnv";
 import Cookies from "cookies";
@@ -9,8 +10,15 @@ import validator from "validator";
 
 type UserResult = {
   email: string;
+  first_name: string;
   password: string;
 };
+
+// type AuthZToken = {
+//   user_id: string;
+//   first_name: string;
+//   scope: string;
+// }
 
 async function loadSentry() {
   const { sentrydsn } = process.env;
@@ -57,7 +65,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     }
 
     const result: any = await query(
-      "select user_id, email, password from users where email = $1",
+      "select user_id, email, first_name, password from users where email = $1",
       [email]
     );
 
@@ -78,7 +86,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       });
     }
 
-    const payload = { user: result.rows[0].email, scope: "All" };
+    const payload: AuthZToken = { user_id: result.rows[0].user_id, first_name: result.rows[0].first_name, scope: "All" };
     const token = await jwt.sign(payload, process.env.jwtsigningkey, {
       algorithm: "HS256"
     });
@@ -117,3 +125,12 @@ function setCookie(req: NowRequest, res: NowResponse, name: string, value: strin
   };
   cookies.set(name, value, options);
 };
+
+
+function expireCookie(req: NowRequest, res: NowResponse, name: string) {
+  const signingKey = getEnv('jwtsigningkey');
+  const cookies = new Cookies(req, res, {
+    keys: [signingKey]
+  });  
+  cookies.set(name);
+}

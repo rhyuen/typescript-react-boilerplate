@@ -24,10 +24,10 @@ const Nav: React.FunctionComponent<NavProps> = ({ handleLogout }) => {
           <Link to="/">Home</Link>
         </span>
         <span>
-          <Link to="/about">About</Link>
+          <Link to="/posts">Posts</Link>
         </span>
         <span>
-          <Link to="/contact">Contact</Link>
+          <Link to="/friends">Friends</Link>
         </span>
       </section>
       <section>

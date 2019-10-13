@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Grid from "../Grid";
 
-interface Props {}
+interface Props { }
 
 const Banner: React.FunctionComponent<{}> = styled.div`
   grid-column: 2 / span 12;
@@ -28,7 +28,7 @@ const Landing: React.FunctionComponent<Props> = () => {
           <ul>
             Things that suggest I am super awesome.
             <li>First thing is I am awesome</li>
-            <li>Batman is the best</li>
+            <li>Dark knight Batman is the best</li>
             <li>Superman is super-duper</li>
           </ul>
         </Banner_Section>

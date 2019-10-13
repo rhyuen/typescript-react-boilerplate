@@ -9,7 +9,6 @@ const uuid = require("uuid");
   try {
     const genExtension = `create extension if not exists "uuid-ossp";`;
     const extResult = await query(genExtension, []);
-    console.log(extResult);
 
     await createUsersTable();
     await createPagesTable();
@@ -17,6 +16,7 @@ const uuid = require("uuid");
     await createUserPersonalPageTrigger();
     await createPageCreationFunction();
     await createCommentsTable();
+    await createFriendsTable();
 
     const genUsersQuery = await generateUsersQuery(data.users)
     const usersResult = await query(genUsersQuery, []);
@@ -28,6 +28,9 @@ const uuid = require("uuid");
 
     const generateCommentForPosts = await createCommentsForPost();
     const commentsCreationResult = await query(generateCommentForPosts, []);
+    const makeFriendsQuery = await fillFriendsTable();
+    const friendsCreationResult = await query(makeFriendsQuery, []);
+    console.log(friendsCreationResult);
 
   } catch (e) {
     console.log(e);
@@ -39,15 +42,15 @@ const uuid = require("uuid");
 async function createUsersTable() {
   try {
     const createUsersTable = `drop table if exists users cascade; 
-    create table users(
-    user_id uuid primary key,
-    email text not null,
-    password text not null,
-    first_name text default 'default_first_name',
-    last_name text default 'default_last_name',
-    created_at timestamp not null default current_timestamp,
-    last_modified timestamp not null default current_timestamp  
-  );`
+      create table users(
+      user_id uuid primary key,
+      email text not null,
+      password text not null,
+      first_name text default 'default_first_name',
+      last_name text default 'default_last_name',
+      created_at timestamp not null default current_timestamp,
+      last_modified timestamp not null default current_timestamp  
+    );`
     const result = await query(createUsersTable, []);
     //console.log(result);
     console.log("Users Table Created.");
@@ -108,7 +111,7 @@ async function createPageCreationFunction() {
     $BODY$
     BEGIN
       insert into pages (page_id, creator_id, name, description, personal) 
-      values (uuid_generate_v4(), NEW.user_id, NEW.first_name || ' Personal Page', NEW.first_name  || 's page description', true);      
+      values (uuid_generate_v4(), NEW.user_id, NEW.first_name || ' ' || New.last_name || ' Personal Page', NEW.first_name  || 's page description', true);      
       return new;
     END;
     $BODY$
@@ -188,6 +191,57 @@ async function createCommentsTable() {
   }
 }
 
+
+async function createFriendsTable() {
+  const createFriendsTable = `
+    drop table if exists friends cascade;
+    create table friends(      
+      friender_id uuid not null references users(user_id),
+      friendee_id uuid not null references users(user_id),
+      accepted boolean not null default false,
+      created_at timestamp not null default current_timestamp,
+      last_modified timestamp not null default current_timestamp,
+      check (friender_id != friendee_id),
+      primary key(friender_id, friendee_id)
+    );  
+  `;
+  const result = await query(createFriendsTable, []);
+  console.log("Friend table created.");
+}
+
+async function fillFriendsTable() {
+  try {
+    const getUsersQuery = `select user_id from users;`;
+    const { rows } = await query(getUsersQuery, []);
+
+    let insertionQuery = '';
+    const arbitraryLength = 20;
+    //NOTE: There are collisions if you make too many friends.
+    for (let i = 0; i < arbitraryLength; i++) {
+
+      const { user_id } = rows[i];
+
+      const friendee_id_one = rows[arbitraryLength + 1].user_id;
+
+      const queryPortion = `
+      insert into friends(friender_id, friendee_id, accepted)
+      values
+        ('${user_id}', '${friendee_id_one}', false);        
+    `;
+      insertionQuery += queryPortion;
+    }
+    console.log("friends table begin")
+    console.log(insertionQuery);
+    console.log("friends table end")
+    return insertionQuery;
+  } catch (e) {
+    console.log(`Issue with creating friends insertion query.`);
+    console.error(e);
+  }
+}
+
+
+
 async function createNonPersonalPages() {
   const getUsersQuery = `select user_id, first_name, last_name from users;`;
   const { rows } = await query(getUsersQuery, []);
@@ -197,7 +251,7 @@ async function createNonPersonalPages() {
     const { user_id, first_name, last_name } = rows[i];
     const queryPortion = `
       insert into pages(page_id, creator_id, personal, name, description)
-      values('${uuid.v4()}', '${user_id}', false, '${first_name}s non-personal page.', 'A non-personal page description is here.');
+      values('${uuid.v4()}', '${user_id}', false, '${first_name} ${last_name}s non-personal page.', 'A non-personal page description is here.');
     `;
     insertionQuery += queryPortion;
   }
@@ -249,9 +303,9 @@ async function createCommentsForPost() {
     const currComment = `
       insert into comments (comment_id, post_id, user_id, content)
       values 
-        ('${uuid.v4()}', '${post_id}', '${userRows[randomUserOne].user_id}', 'First Comment here.'),
-        ('${uuid.v4()}', '${post_id}', '${userRows[randomUserTwo].user_id}', 'Second Comment Here.'),
-        ('${uuid.v4()}', '${post_id}', '${userRows[randomUserThree].user_id}', 'Moltres comment here.')
+        ('${uuid.v4()}', '${post_id}', '${userRows[randomUserOne].user_id}', '${userRows[randomUserOne].first_name} arbitrary comment here.'),
+        ('${uuid.v4()}', '${post_id}', '${userRows[randomUserTwo].user_id}', '${userRows[randomUserTwo].first_name} random comment here.'),
+        ('${uuid.v4()}', '${post_id}', '${userRows[randomUserThree].user_id}', '${userRows[randomUserThree].first_name} curious comment here.')
     ;`;
     insertCommentsToPosts += currComment;
   }

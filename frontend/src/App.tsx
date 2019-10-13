@@ -1,17 +1,19 @@
 import * as React from "react";
-import { Route, HashRouter, Redirect } from "react-router-dom";
+import { Route, Switch, HashRouter, Redirect } from "react-router-dom";
+import axios from "axios";
 import { hot } from "react-hot-loader";
 import styled from "styled-components";
+import NotFound from "./NotFound"
 import Nav from "./Nav";
 import Grid from "./Grid";
 
 import UnauthedHome from "./unauthed/UnauthedHome";
 
 const Home = React.lazy(() => import("./authed/Home"));
-const About = React.lazy(() => import("./authed/About"));
-const Contact = React.lazy(() => import("./authed/Contact"));
+const Posts = React.lazy(() => import("./authed/Posts"));
+const Friends = React.lazy(() => import("./authed/Friends"));
 
-interface Props {}
+interface Props { }
 
 interface State {
   authenticatedFlag: string;
@@ -37,13 +39,30 @@ class App extends React.Component<Props, State> {
     });
   };
 
-  toggleToLoggedOutState = () => {
-    const { authenticatedFlag } = this.state;
-    window.localStorage.setItem(authenticatedFlag, "loggedOut");
-    return this.setState({
-      signedIn: false
-    });
-  };
+  toggleToLoggedOutState = async () => {
+    try {
+      const result = await axios.get("/api/logout");
+      console.dir(result);
+      console.log('signout result.');
+
+
+      const { authenticatedFlag } = this.state;
+      window.localStorage.setItem(authenticatedFlag, "loggedOut");
+      return this.setState({
+        signedIn: false
+      });
+    } catch (e) {
+      if (e.response.status === 500) {
+        console.log("Something went wrong with the logout process");
+        const { authenticatedFlag } = this.state;
+        window.localStorage.setItem(authenticatedFlag, "loggedOut");
+        return this.setState({
+          signedIn: false
+        });
+
+      }
+    };
+  }
 
   componentDidMount() {
     const { authenticatedFlag } = this.state;
@@ -56,24 +75,26 @@ class App extends React.Component<Props, State> {
   render() {
     const { authenticatedFlag } = this.state;
     const signedIn = window.localStorage.getItem(authenticatedFlag);
-    console.log(`The value is ${signedIn}`);
+
     return signedIn === "loggedIn" ? (
       <HashRouter>
         <Grid>
           <Nav handleLogout={this.toggleToLoggedOutState} />
           <ContentFrame>
             <React.Suspense fallback={"totally not loading..."}>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/contact" component={Contact} />
-              <Route render={() => <Redirect to="/" />} />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/posts" component={Posts} />
+                <Route exact path="/friends" component={Friends} />
+                <Redirect to="/" />
+              </Switch>
             </React.Suspense>
           </ContentFrame>
         </Grid>
       </HashRouter>
     ) : (
-      <UnauthedHome handleLogin={this.toggleToLoggedInState} />
-    );
+        <UnauthedHome handleLogin={this.toggleToLoggedInState} />
+      );
   }
 }
 

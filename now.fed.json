@@ -14,7 +14,7 @@
     },
     "builds": [
         {
-            "src": "/functions/*.ts",
+            "src": "/backend/functions/*.ts",
             "use": "@now/node"
         },
         {
@@ -27,13 +27,10 @@
     ],
     "routes": [
         {
-            "src": "/api/userDetails",
-            "dest": "/backend/functions/userDetails.ts"
-        },
-        {
             "src": "/api/(.*)",
             "dest": "/backend/functions/$1.ts",
             "methods": [
+                "GET",
                 "POST",
                 "OPTIONS"
             ]

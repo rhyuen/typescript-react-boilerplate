@@ -28,9 +28,14 @@
             "dest": "/backend/functions/userDetails.ts"
         },
         {
+            "src": "/api/getFriends",
+            "dest": "/backend/functions/getFriends.ts"
+        },
+        {
             "src": "/api/(.*)",
             "dest": "/backend/functions/$1.ts",
             "methods": [
+                "GET",
                 "POST",
                 "OPTIONS"
             ]

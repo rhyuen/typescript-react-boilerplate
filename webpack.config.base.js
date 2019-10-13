@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
-        "index": path.join(__dirname, "src/Index.tsx")
+        "index": path.join(__dirname, "frontend/src/Index.tsx")
     },
     output: {
         path: path.join(__dirname, "dist"),
@@ -36,7 +36,7 @@ module.exports = {
     },
     plugins: [
         new HTMLWebpackPlugin({
-            template: path.join(__dirname, "src/templates/index.html"),
+            template: path.join(__dirname, "frontend/src/templates/index.html"),
             filename: "index.html",
             inject: "body",
             title: "Front End Boilerplate Project"
