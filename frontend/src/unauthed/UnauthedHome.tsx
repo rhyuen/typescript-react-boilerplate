@@ -20,10 +20,13 @@ const UnauthedHome: React.FunctionComponent<Props> = ({ handleLogin }) => {
           <Route
             exact
             path="/login"
-            render={routeProps => <Login handleLogin={handleLogin} />}
+            render={() => <Login handleLogin={handleLogin} />}
           />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/forgot" component={Forgot} />
+          <Route
+            path="/*"
+            render={() => <Redirect to="/" />} />
           <Route component={NotFound} />
         </Switch>
       </div>

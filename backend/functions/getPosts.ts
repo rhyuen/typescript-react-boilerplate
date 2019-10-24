@@ -21,8 +21,6 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
 
         const { user_id } = await Auth.getFromToken(req);
 
-
-
         const getPersonalPosts = `
             select name, content, created_at 
             from posts            

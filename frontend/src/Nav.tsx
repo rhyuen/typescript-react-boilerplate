@@ -4,12 +4,27 @@ import { Link } from "react-router-dom";
 
 const StyledNav: React.FunctionComponent<{}> = styled.nav`
   grid-column: 1 / span 14;
-  background-color: lavender;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   padding: 15px;
   align-items: center;
   height: 5vh;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;    
+
+  &:visited{
+    color: black;
+  }
+`;
+const NavSpacer = styled.span`
+  margin-right: 10px;
 `;
 
 interface NavProps {
@@ -20,19 +35,19 @@ const Nav: React.FunctionComponent<NavProps> = ({ handleLogout }) => {
   return (
     <StyledNav>
       <section>
-        <span>
-          <Link to="/">Home</Link>
-        </span>
-        <span>
-          <Link to="/posts">Posts</Link>
-        </span>
-        <span>
-          <Link to="/friends">Friends</Link>
-        </span>
+        <NavSpacer>
+          <StyledLink to="/">Home</StyledLink>
+        </NavSpacer>
+        <NavSpacer>
+          <StyledLink to="/posts">Posts</StyledLink>
+        </NavSpacer>
+        <NavSpacer>
+          <StyledLink to="/friends">Friends</StyledLink>
+        </NavSpacer>
       </section>
       <section>
-        <span>UserName</span>
-        <span onClick={handleLogout}>Logout</span>
+        <NavSpacer>UserName</NavSpacer>
+        <NavSpacer onClick={handleLogout}>Logout</NavSpacer>
       </section>
     </StyledNav>
   );

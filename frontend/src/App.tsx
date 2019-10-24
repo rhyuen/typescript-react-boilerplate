@@ -83,9 +83,15 @@ class App extends React.Component<Props, State> {
           <ContentFrame>
             <React.Suspense fallback={"totally not loading..."}>
               <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/posts" component={Posts} />
-                <Route exact path="/friends" component={Friends} />
+                <Route exact path="/" render={
+                  () => <Home handleLogout={this.toggleToLoggedOutState} />
+                } />
+                <Route exact path="/posts" render={
+                  () => <Posts handleLogout={this.toggleToLoggedOutState} />
+                } />
+                <Route exact path="/friends"
+                  render={() => <Friends handleLogout={this.toggleToLoggedOutState} />}
+                />
                 <Redirect to="/" />
               </Switch>
             </React.Suspense>

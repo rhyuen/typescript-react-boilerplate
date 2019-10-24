@@ -28,11 +28,11 @@
     "routes": [
         {
             "src": "/api/userDetails",
-            "dest": "functions/userDetails.ts"
+            "dest": "/backend/functions/userDetails.ts"
         },
         {
             "src": "/api/(.*)",
-            "dest": "functions/$1.ts",
+            "dest": "/backend/functions/$1.ts",
             "methods": [
                 "POST",
                 "OPTIONS"

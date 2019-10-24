@@ -1,4 +1,5 @@
 import * as React from "react";
+import { v4 } from "uuid";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 
@@ -14,7 +15,11 @@ interface State {
   message: string;
 }
 
-const Home: React.FunctionComponent<{}> = () => {
+interface Props {
+  handleLogout: () => void;
+}
+
+const Home: React.FunctionComponent<Props> = (props: Props) => {
 
   const [data, setData] = React.useState<State>({
     loading: true,
@@ -33,7 +38,7 @@ const Home: React.FunctionComponent<{}> = () => {
     }).catch(e => {
       if (e.response.status === 401) {
         console.log("Not authorized because no token. Redirecting to Home.");
-        return <Redirect to="/" />;
+        props.handleLogout();
       }
       console.log("Error with GET in Authed/Home.")
     });
@@ -50,11 +55,11 @@ const Home: React.FunctionComponent<{}> = () => {
               {
                 data.payload.map((r: PostResult) => {
                   return (
-                    <>
+                    <div key={v4()}>
                       <div>{r.name}</div>
                       <div>{r.content}</div>
                       <div>{r.created_at}</div>
-                    </>
+                    </div>
                   );
                 })
               }
