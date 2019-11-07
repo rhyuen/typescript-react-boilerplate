@@ -1,6 +1,9 @@
 import * as React from "react";
 import Grid from "../Grid";
 import styled from "styled-components";
+import Header from "../shared/Header"
+import SubmitInput from "../shared/SubmitInput"
+import TextInput from "../shared/TextInput"
 import axios from "axios";
 
 interface Props { }
@@ -61,9 +64,9 @@ const Signup: React.FunctionComponent<{}> = () => {
   return (
     <Grid>
       <Container>
-        <h1>Signup</h1>
+        <Header>Signup</Header>
         <form onSubmit={handleSubmit}>
-          <input
+          <TextInput
             type="text"
             name="email"
             placeholder="email"
@@ -71,7 +74,7 @@ const Signup: React.FunctionComponent<{}> = () => {
             value={formValues.email}
           />
           <br />
-          <input
+          <TextInput
             type="text"
             name="first_name"
             placeholder="First name"
@@ -79,7 +82,7 @@ const Signup: React.FunctionComponent<{}> = () => {
             value={formValues.first_name}
           />
           <br />
-          <input
+          <TextInput
             type="text"
             name="last_name"
             placeholder="Last Name"
@@ -87,7 +90,7 @@ const Signup: React.FunctionComponent<{}> = () => {
             value={formValues.last_name}
           />
           <br />
-          <input
+          <TextInput
             type="password"
             name="password"
             placeholder="password"
@@ -95,14 +98,14 @@ const Signup: React.FunctionComponent<{}> = () => {
             value={formValues.password}
           />
           <br />
-          <input
+          <TextInput
             type="password"
             name="confirmation"
             placeholder="password"
             onChange={handleInputChange}
             value={formValues.confirmation}
           />
-          <input type="submit" value="signup" />
+          <SubmitInput type="submit" value="signup" />
         </form>
       </Container>
     </Grid>

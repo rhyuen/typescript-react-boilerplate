@@ -1,7 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
+import TextInput from "../shared/TextInput";
+import SubmitInput from "../shared/SubmitInput"
 import axios from "axios";
 import Grid from "../Grid";
+import Header from "../shared/Header";
 
 interface Props {
   handleLogin(): any;
@@ -49,9 +52,9 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
   return (
     <Grid>
       <LoginContainer>
-        <h1>Login</h1>
+        <Header>Login</Header>
         <form onSubmit={handleFormSubmit}>
-          <input
+          <TextInput
             type="text"
             name="email"
             placeholder="email@email.ca"
@@ -59,14 +62,14 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
             onChange={handleFormChange}
           />
           <br />
-          <input
+          <TextInput
             type="password"
             name="password"
             placeholder="password goes here."
             value={credentials.password}
             onChange={handleFormChange}
           />
-          <input type="submit" value="signup" />
+          <SubmitInput type="submit" value="Login" />
         </form>
       </LoginContainer>
     </Grid>

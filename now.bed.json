@@ -10,7 +10,10 @@
         "ts_pg_user_faas": "@ts_pg_user_faas",
         "ts_pg_host_faas": "@ts_pg_host_faas",
         "ts_pg_dbname_faas": "@ts_pg_dbname_faas",
-        "ts_pg_password_faas": "@ts_pg_password_faas"
+        "ts_pg_password_faas": "@ts_pg_password_faas",
+        "ts_redis_port": "@ts_redis_port",
+        "ts_redis_host": "@ts_redis_host",
+        "ts_redis_password": "@ts_redis_password"
     },
     "builds": [
         {
@@ -24,14 +27,6 @@
     ],
     "routes": [
         {
-            "src": "/api/userDetails",
-            "dest": "/backend/functions/userDetails.ts"
-        },
-        {
-            "src": "/api/getFriends",
-            "dest": "/backend/functions/getFriends.ts"
-        },
-        {
             "src": "/api/(.*)",
             "dest": "/backend/functions/$1.ts",
             "methods": [
@@ -39,10 +34,6 @@
                 "POST",
                 "OPTIONS"
             ]
-        },
-        {
-            "src": "/",
-            "dest": "/dist/index.html"
         },
         {
             "src": "/(.*)",

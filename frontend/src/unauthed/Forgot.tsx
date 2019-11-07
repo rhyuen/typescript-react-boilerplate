@@ -1,8 +1,11 @@
 import * as React from "react";
 import axios from "axios";
 import Grid from "../Grid";
+import SubmitInput from "../shared/SubmitInput";
+import TextInput from "../shared/TextInput";
+import Header from "../shared/Header";
 
-interface Props {}
+interface Props { }
 
 const Forgot: React.FunctionComponent<Props> = () => {
   const [email, updateEmail] = React.useState("");
@@ -28,15 +31,15 @@ const Forgot: React.FunctionComponent<Props> = () => {
   return (
     <Grid>
       <div>
-        <h1>Email reset</h1>
+        <Header>Email reset</Header>
         <form onSubmit={handleSubmit}>
-          <input
+          <TextInput
             type="text"
             value={email}
             onChange={handleChange}
             placeholder="email@email.ca"
           />
-          <input type="submit" value="Send Email" />
+          <SubmitInput type="submit" value="Send Email" />
         </form>
       </div>
     </Grid>

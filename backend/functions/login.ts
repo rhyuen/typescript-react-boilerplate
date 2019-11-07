@@ -86,7 +86,11 @@ export default async (req: NowRequest, res: NowResponse) => {
       });
     }
 
-    const payload: AuthZToken = { user_id: result.rows[0].user_id, first_name: result.rows[0].first_name, scope: "All" };
+    const payload: AuthZToken = {
+      user_id: result.rows[0].user_id,
+      first_name: result.rows[0].first_name,
+      scope: "All"
+    };
     const token = await jwt.sign(payload, process.env.jwtsigningkey, {
       algorithm: "HS256"
     });
@@ -96,6 +100,14 @@ export default async (req: NowRequest, res: NowResponse) => {
 
     setCookie(req, res, "login", token)
 
+    console.info(token);
+
+    // {
+    //   user_id: 'd6bced82-9070-481d-81bd-9252435ae4c1',
+    //   first_name: 'carol',
+    //   scope: 'All',
+    //   iat: 1572925570
+    // }
 
     return res.status(200).json({
       message: `Your email is '${email}' and your password is '${password}'.`,
@@ -116,12 +128,20 @@ function setCookie(req: NowRequest, res: NowResponse, name: string, value: strin
   const cookies = new Cookies(req, res, {
     keys: [signingKey]
   });
+
+
+  let currentDate = new Date();
+  let expiryDate = new Date();
+  expiryDate.setTime(currentDate.getTime() + (15 * 60 * 1000));
+  //expires in 15 minutes
+
   const options = {
     signed: true,
     secure: false,
     httpOnly: true,
     path: "/",
-    maxAge: 3000000
+    expires: expiryDate, //date string
+    maxAge: 3600000  //this is actually in milliseconds.  contrary to mdn docs.
   };
   cookies.set(name, value, options);
 };
@@ -131,6 +151,6 @@ function expireCookie(req: NowRequest, res: NowResponse, name: string) {
   const signingKey = getEnv('jwtsigningkey');
   const cookies = new Cookies(req, res, {
     keys: [signingKey]
-  });  
+  });
   cookies.set(name);
 }

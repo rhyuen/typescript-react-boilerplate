@@ -3,7 +3,6 @@ import { Route, Switch, HashRouter, Redirect } from "react-router-dom";
 import axios from "axios";
 import { hot } from "react-hot-loader";
 import styled from "styled-components";
-import NotFound from "./NotFound"
 import Nav from "./Nav";
 import Grid from "./Grid";
 
@@ -41,27 +40,21 @@ class App extends React.Component<Props, State> {
 
   toggleToLoggedOutState = async () => {
     try {
-      const result = await axios.get("/api/logout");
-      console.dir(result);
-      console.log('signout result.');
+      const result = await axios.get("/api/logout", { withCredentials: true });
+      //EXPIRE COOKIE. 
+      console.dir(`[TOGGLE SIGNOUT ]: ${result}`);
 
+    } catch (e) {
+      console.error(`[TOGGLE SIGNOUT]: ${e}`);
 
+    } finally {
       const { authenticatedFlag } = this.state;
       window.localStorage.setItem(authenticatedFlag, "loggedOut");
       return this.setState({
         signedIn: false
       });
-    } catch (e) {
-      if (e.response.status === 500) {
-        console.log("Something went wrong with the logout process");
-        const { authenticatedFlag } = this.state;
-        window.localStorage.setItem(authenticatedFlag, "loggedOut");
-        return this.setState({
-          signedIn: false
-        });
+    }
 
-      }
-    };
   }
 
   componentDidMount() {
@@ -81,7 +74,7 @@ class App extends React.Component<Props, State> {
         <Grid>
           <Nav handleLogout={this.toggleToLoggedOutState} />
           <ContentFrame>
-            <React.Suspense fallback={"totally not loading..."}>
+            <React.Suspense fallback={"Totally not loading..."}>
               <Switch>
                 <Route exact path="/" render={
                   () => <Home handleLogout={this.toggleToLoggedOutState} />
