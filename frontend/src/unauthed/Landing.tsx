@@ -35,7 +35,7 @@ const Landing: React.FunctionComponent<Props> = () => {
       <Banner>
         <Banner_Section>
           <StyledList>
-            <Header>Another Social Network for the ages.</Header>
+            <Header>LAICOS: Another Social Network for the ages.</Header>
             <li>Minimal Security</li>
             <li>No Verification</li>
             <li>Absence of Safeguards</li>
@@ -51,6 +51,17 @@ const Landing: React.FunctionComponent<Props> = () => {
           <p>
             Password Reset <Link to="/forgot"><ClickButton>here</ClickButton></Link>.
           </p>
+        </Banner_Section>
+      </Banner>
+      <Banner>
+        <Banner_Section />
+        <Banner_Section>
+          <StyledList>
+            <Header>Includes the following features:</Header>
+            <li>Share your thoughts</li>
+            <li>Make Friends</li>
+            <li>Contribute to the Panopticon</li>
+          </StyledList>
         </Banner_Section>
       </Banner>
     </Grid>

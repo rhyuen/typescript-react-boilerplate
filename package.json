@@ -69,6 +69,7 @@
     "core-js": "^3.2.1",
     "enzyme-to-json": "3.3.5",
     "jsonwebtoken": "^8.5.1",
+    "now": "^16.7.0",
     "pg": "^7.12.1",
     "prop-types": "15.7.1",
     "react": "16.8.1",
@@ -83,7 +84,9 @@
     "uuid": "3.3.2",
     "validator": "^11.1.0",
     "webpack-bundle-analyzer": "3.3.2",
-    "webpack-cli": "3.2.3"
+    "webpack-cli": "3.2.3",
+    "winston": "^3.2.1",
+    "winston-papertrail": "^1.0.5"
   },
   "scripts": {
     "start": "npm run build",

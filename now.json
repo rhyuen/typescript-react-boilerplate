@@ -5,6 +5,7 @@
         "rylogints"
     ],
     "env": {
+        "NODE_ENV": "development",
         "sentrydsn": "@sentry_dsn_typescript_auth",
         "jwtsigningkey": "@ts_cookie_key",
         "ts_pg_user_faas": "@ts_pg_user_faas",
@@ -13,7 +14,9 @@
         "ts_pg_password_faas": "@ts_pg_password_faas",
         "ts_redis_port": "@ts_redis_port",
         "ts_redis_host": "@ts_redis_host",
-        "ts_redis_password": "@ts_redis_password"
+        "ts_redis_password": "@ts_redis_password",
+        "ts_papertrail_host": "@ts_papertrail_host",
+        "ts_papertrail_port": "@ts_papertrail_port"
     },
     "builds": [
         {

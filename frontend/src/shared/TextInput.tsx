@@ -11,6 +11,9 @@ const StyledInput = styled.input`
     &:focus{
         outline: none;
     }
+    &::placeholder{
+        color: rgba(0,0,0,0.2);
+    }
 `;
 
 export default StyledInput;

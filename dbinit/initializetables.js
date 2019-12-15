@@ -154,22 +154,22 @@ async function createPagesTable() {
 async function createPostsTable() {
   try {
     const createPostsTableQuery = `drop table if exists posts cascade;
-    create table posts (
-      post_id uuid not null primary key,
-      user_id uuid references users(user_id),
-      page_id uuid references pages(page_id),
-      name text default 'post',
-      medialink text default 'none',
-      content text,
-      created_at timestamp not null default current_timestamp,
-      last_modified timestamp not null default current_timestamp
-    );
-  `;
+      create table posts (
+        post_id uuid not null primary key,
+        user_id uuid references users(user_id),
+        page_id uuid references pages(page_id),
+        name text default 'post',
+        medialink text default 'none',
+        content text,
+        created_at timestamp not null default current_timestamp,
+        last_modified timestamp not null default current_timestamp
+      );
+    `;
     const result = await query(createPostsTableQuery, []);
     console.log(`POSTS table created.`);
     return result;
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
@@ -177,17 +177,17 @@ async function createCommentsTable() {
   try {
     const createCommentsTableQuery = `drop table if exists comments cascade; 
       create table comments (
-      comment_id uuid not null primary key,
-      post_id uuid not null references posts (post_id),
-      user_id uuid not null references users (user_id),
-      content text not null,
-      created_at timestamp not null default current_timestamp,
-      last_modified timestamp not null default current_timestamp
-    )`;
+        comment_id uuid not null primary key,
+        post_id uuid not null references posts (post_id),
+        user_id uuid not null references users (user_id),
+        content text not null,
+        created_at timestamp not null default current_timestamp,
+        last_modified timestamp not null default current_timestamp
+      )`;
     const commentsTableResult = await query(createCommentsTableQuery, []);
     return commentsTableResult;
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 

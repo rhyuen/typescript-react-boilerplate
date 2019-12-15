@@ -4,6 +4,7 @@ import Grid from "../Grid";
 import SubmitInput from "../shared/SubmitInput";
 import TextInput from "../shared/TextInput";
 import Header from "../shared/Header";
+import OneCol from "../shared/OneCol";
 
 interface Props { }
 
@@ -30,8 +31,8 @@ const Forgot: React.FunctionComponent<Props> = () => {
 
   return (
     <Grid>
-      <div>
-        <Header>Email reset</Header>
+      <OneCol>
+        <Header>Email Reset</Header>
         <form onSubmit={handleSubmit}>
           <TextInput
             type="text"
@@ -41,9 +42,10 @@ const Forgot: React.FunctionComponent<Props> = () => {
           />
           <SubmitInput type="submit" value="Send Email" />
         </form>
-      </div>
+      </OneCol>
     </Grid>
   );
 };
+
 
 export default Forgot;

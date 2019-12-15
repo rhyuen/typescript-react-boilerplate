@@ -10,7 +10,6 @@ export default function getEnv(key: string): string {
         process.env[key]! :
         "empty string";
 
-
     return envVar;
 }
 

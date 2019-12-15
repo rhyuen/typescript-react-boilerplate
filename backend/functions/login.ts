@@ -3,12 +3,14 @@ import { AuthZToken } from './types/index';
 import { query } from "./db/index";
 import getEnv from "./mw/getEnv";
 import Cookies from "cookies";
-import * as Sentry from "@sentry/node";
+import logger from "./mw/logger";
+import { startSentry } from "./mw/sentry";
+
 import * as jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
-type UserResult = {
+interface UserResult {
   email: string;
   first_name: string;
   password: string;
@@ -20,21 +22,10 @@ type UserResult = {
 //   scope: string;
 // }
 
-async function loadSentry() {
-  const { sentrydsn } = process.env;
-  console.log(`LOADING SENTRY: ${sentrydsn}`);
-  Sentry.init({ dsn: sentrydsn });
-}
-
 export default async (req: NowRequest, res: NowResponse) => {
   try {
-    if (!process.env.jwtsigningkey) {
-      throw new Error(
-        "You're missing the JWT Signing Key in your Environment Variables."
-      );
-    }
 
-    await loadSentry();
+    await startSentry();
 
     if (!req.body.email) {
       return res.status(400).json({
@@ -91,7 +82,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       first_name: result.rows[0].first_name,
       scope: "All"
     };
-    const token = await jwt.sign(payload, process.env.jwtsigningkey, {
+    const token = await jwt.sign(payload, getEnv("jwtsigningkey"), {
       algorithm: "HS256"
     });
 
@@ -99,7 +90,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     // currentCookie.set("token", token);
 
     setCookie(req, res, "login", token)
-
+    setNameCookie(req, res, payload.first_name);
     console.info(token);
 
     // {
@@ -114,13 +105,30 @@ export default async (req: NowRequest, res: NowResponse) => {
       token: token
     });
   } catch (e) {
-    console.log(`Error Handler for Login.ts: DETAILS: ${e}`);
+    logger.error(`Error Handler for Login.ts: DETAILS: ${e}`);
     return res.status(500).json({
       message: "Something has gone wrong.",
       description: e
     });
   }
 };
+
+function setNameCookie(req: NowRequest, res: NowResponse, value: string) {
+  const signingKey = getEnv('jwtsigningkey');
+  const cookies = new Cookies(req, res, {
+    keys: [signingKey]
+  });
+
+  const options = {
+    signed: true,
+    secure: false,
+    httpOnly: false,
+    path: "/",
+    maxAge: 3600000
+  };
+
+  cookies.set('username', value, options);
+}
 
 
 function setCookie(req: NowRequest, res: NowResponse, name: string, value: string) {
@@ -145,12 +153,3 @@ function setCookie(req: NowRequest, res: NowResponse, name: string, value: strin
   };
   cookies.set(name, value, options);
 };
-
-
-function expireCookie(req: NowRequest, res: NowResponse, name: string) {
-  const signingKey = getEnv('jwtsigningkey');
-  const cookies = new Cookies(req, res, {
-    keys: [signingKey]
-  });
-  cookies.set(name);
-}

@@ -3,6 +3,11 @@
 Typescript authentication boiler plate.
 
 
+# UPDATES
+
+*November 18, 2019*
+1. Adding Papertrail and Winston for Logging.
+
 
 # LESSONS LEARNED
 

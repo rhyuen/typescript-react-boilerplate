@@ -1,7 +1,9 @@
 import * as React from "react";
 import { v4 } from "uuid";
-import { Redirect } from "react-router-dom";
+import styled from 'styled-components';
+import Card, { SubTitle, Header } from "../shared/Card";
 import axios from "axios";
+import NewPost from "./NewPost";
 
 interface PostResult {
   name: string;
@@ -27,6 +29,8 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
     message: "Loading..."
   });
 
+
+  //TODO: CREATE CONTEXT FOR USERNAME IN NAV
   React.useEffect(() => {
     axios.get("/api/userDetails").then(res => {
       console.log(res.data);
@@ -52,14 +56,15 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
           <p>stuff's loading.</p> :
           <>
             <div>
+              <NewPost />
               {
                 data.payload.map((r: PostResult) => {
                   return (
-                    <div key={v4()}>
-                      <div>{r.name}</div>
-                      <div>{r.content}</div>
-                      <div>{r.created_at}</div>
-                    </div>
+                    <Card key={v4()}>
+                      <Header>{r.name}</Header>
+                      <SubTitle>{r.created_at}</SubTitle>
+                      <p>{r.content}</p>
+                    </Card>
                   );
                 })
               }
@@ -71,3 +76,5 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 export default Home;
+
+

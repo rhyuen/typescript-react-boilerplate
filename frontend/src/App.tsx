@@ -2,6 +2,7 @@ import * as React from "react";
 import { Route, Switch, HashRouter, Redirect } from "react-router-dom";
 import axios from "axios";
 import { hot } from "react-hot-loader";
+import Spinner from "./shared/Spinner";
 import styled from "styled-components";
 import Nav from "./Nav";
 import Grid from "./Grid";
@@ -20,7 +21,7 @@ interface State {
 }
 
 const ContentFrame: React.FunctionComponent<{}> = styled.section`
-  background-color: papayawhip;
+  background-color: white;
   grid-column: 2 / span 12;
 `;
 
@@ -74,7 +75,7 @@ class App extends React.Component<Props, State> {
         <Grid>
           <Nav handleLogout={this.toggleToLoggedOutState} />
           <ContentFrame>
-            <React.Suspense fallback={"Totally not loading..."}>
+            <React.Suspense fallback={<Spinner />}>
               <Switch>
                 <Route exact path="/" render={
                   () => <Home handleLogout={this.toggleToLoggedOutState} />

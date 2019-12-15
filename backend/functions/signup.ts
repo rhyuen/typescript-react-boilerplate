@@ -3,6 +3,7 @@ import * as Sentry from "@sentry/node";
 import { hash } from "bcrypt";
 import { isEmail } from "validator";
 import { query } from "./db/index";
+import logger from "./mw/logger";
 import { v4 } from "uuid";
 
 export default async (req: NowRequest, res: NowResponse) => {
@@ -53,7 +54,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       confirmation: `You've successfully signed up using the email address: '${email}'.`
     });
   } catch (e) {
-    console.log(e);
+    logger.error(e);
     return res.status(500).json({
       message: "An error has occurred.",
       description: e

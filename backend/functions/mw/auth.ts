@@ -1,23 +1,23 @@
 import { NowRequest } from "@now/node";
 import { verify } from "jsonwebtoken";
+import logger from "./logger"
 import getEnv from "./getEnv";
 
 export async function checkToken(req: NowRequest): Promise<boolean> {
   try {
     const secret = getEnv('jwtsigningkey');
     const tokenToVerify = req.cookies['login'];
-    console.log(`[CheckToken]: Cookie: ${tokenToVerify}`);
+    logger.info(`[CheckToken]: Cookie: ${tokenToVerify}`);
 
     if (!tokenToVerify) {
-      console.log("No AuthZ token. Redirecting.");
+      logger.info("No AuthZ token. Redirecting.");
       return false;
     }
 
     const result = await verify(tokenToVerify, secret);
-    console.log(result);
 
     if (!result) {
-      console.log("Invalid AuthZ token.");
+      logger.info("Invalid AuthZ token.");
       return false;
     }
 
@@ -27,7 +27,7 @@ export async function checkToken(req: NowRequest): Promise<boolean> {
     return true;
 
   } catch (e) {
-    console.log(`[AUTH ERROR] ${e}`);
+    logger.error(`[AUTHZ ERROR] ${e}`);
     return false;
   }
 };
@@ -43,6 +43,6 @@ export async function getFromToken(req: NowRequest): Promise<any> {
     const result = await verify(tokenToVerify, secret);
     return result;
   } catch (e) {
-    console.error(`[GETFROMTOKEN ERROR]: ${e.message}`);
+    logger.error(`[GETFROMTOKEN ERROR]: ${e.message}`);
   }
 }

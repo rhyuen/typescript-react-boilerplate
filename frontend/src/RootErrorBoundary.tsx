@@ -1,7 +1,11 @@
 import * as React from "react";
 import * as Sentry from "@sentry/browser";
+import Grid from "./Grid";
+import OneCol from "./shared/OneCol";
+import Header from "./shared/Header";
+import ClickButton from "./shared/ClickButton";
 
-interface Props {}
+interface Props { }
 
 interface State {
   isError: boolean;
@@ -31,18 +35,20 @@ export default class RootErrorBoundary extends React.Component<Props, State> {
     const { isError } = this.state;
     const { children } = this.props;
     return isError ? (
-      <section>
-        An error occurred.
-        <button
-          onClick={() =>
-            Sentry.showReportDialog({ eventId: this.state.eventId })
-          }
-        >
-          Report feedback {this.state.eventId}
-        </button>
-      </section>
+      <Grid>
+        <OneCol>
+          <Header>An error has occurred.</Header>
+          <ClickButton
+            onClick={() =>
+              Sentry.showReportDialog({ eventId: this.state.eventId })
+            }
+          >
+            Report feedback
+          </ClickButton>
+        </OneCol>
+      </Grid>
     ) : (
-      children
-    );
+        children
+      );
   }
 }

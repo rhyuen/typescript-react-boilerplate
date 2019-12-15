@@ -5,12 +5,10 @@ import Header from "../shared/Header"
 import SubmitInput from "../shared/SubmitInput"
 import TextInput from "../shared/TextInput"
 import axios from "axios";
+import OneCol from "../shared/OneCol";
 
 interface Props { }
 
-const Container = styled.div`
-  grid-column: 2;
-`;
 
 const Signup: React.FunctionComponent<{}> = () => {
   const [formValues, updateFormValues] = React.useState({
@@ -63,8 +61,8 @@ const Signup: React.FunctionComponent<{}> = () => {
 
   return (
     <Grid>
-      <Container>
-        <Header>Signup</Header>
+      <OneCol>
+        <Header>Sign up for an account.</Header>
         <form onSubmit={handleSubmit}>
           <TextInput
             type="text"
@@ -104,10 +102,10 @@ const Signup: React.FunctionComponent<{}> = () => {
             placeholder="password"
             onChange={handleInputChange}
             value={formValues.confirmation}
-          />
+          /><br />
           <SubmitInput type="submit" value="signup" />
         </form>
-      </Container>
+      </OneCol>
     </Grid>
   );
 };

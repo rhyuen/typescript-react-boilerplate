@@ -1,10 +1,10 @@
 import * as React from "react";
-import styled from "styled-components";
 import TextInput from "../shared/TextInput";
 import SubmitInput from "../shared/SubmitInput"
 import axios from "axios";
 import Grid from "../Grid";
 import Header from "../shared/Header";
+import OneCol from "../shared/OneCol";
 
 interface Props {
   handleLogin(): any;
@@ -51,7 +51,7 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
 
   return (
     <Grid>
-      <LoginContainer>
+      <OneCol>
         <Header>Login</Header>
         <form onSubmit={handleFormSubmit}>
           <TextInput
@@ -68,16 +68,14 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
             placeholder="password goes here."
             value={credentials.password}
             onChange={handleFormChange}
-          />
+          /><br />
           <SubmitInput type="submit" value="Login" />
         </form>
-      </LoginContainer>
+      </OneCol>
     </Grid>
   );
 };
 
-const LoginContainer = styled.div`
-  grid-column: 2 / span 12;
-`;
+
 
 export default Login;

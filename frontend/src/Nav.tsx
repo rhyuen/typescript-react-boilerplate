@@ -25,7 +25,7 @@ const StyledLink = styled(Link)`
   }
 `;
 const NavSpacer = styled.span`
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
 interface NavProps {
@@ -33,6 +33,11 @@ interface NavProps {
 }
 
 const Nav: React.FunctionComponent<NavProps> = ({ handleLogout }) => {
+
+  const username = document.cookie.split(";").filter(c => {
+    return c.split("=")[0] === 'username';
+  });
+
   return (
     <StyledNav>
       <section>
@@ -47,7 +52,7 @@ const Nav: React.FunctionComponent<NavProps> = ({ handleLogout }) => {
         </NavSpacer>
       </section>
       <section>
-        <NavSpacer><Link to="/self"><ClickButton>UserName</ClickButton></Link></NavSpacer>
+        <NavSpacer><Link to="/self"><ClickButton>{username || "YOU"}</ClickButton></Link></NavSpacer>
         <NavSpacer><ClickButton onClick={handleLogout}>Logout</ClickButton></NavSpacer>
       </section>
     </StyledNav>

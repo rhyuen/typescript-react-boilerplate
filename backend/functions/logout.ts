@@ -26,15 +26,22 @@ export default async (req: NowRequest, res: NowResponse) => {
 
         const token = await Auth.getFromToken(req);
         const loggedout_user = token.user_id;
-        console.log(loggedout_user);
-        const remainingTime = Math.abs(Math.ceil(Date.now() / 1000) - token.iat);
+        console.info(`Logged Out token_user.id ${loggedout_user}`);
+
+
+
+        const remainingTime = Math.abs(Math.ceil(Date.now() / 1000) - (token.iat * 1000));
+
+        console.info(`[TOKEN IAT]: ${token.iat}`);
+        console.info(`[TOKEN IAT as DATE]: ${new Date(token.iat * 1000)}`);
 
         const redisResult = await redis.setex(
             loggedout_user,
             remainingTime,
             loggedout_user
         );
-        console.log(redisResult);
+        console.info(`Black Listed Token for: ${remainingTime}`);
+        console.log(`[Redis Signout]: ${redisResult}`);
 
         expireCookie(req, res, 'login');
 

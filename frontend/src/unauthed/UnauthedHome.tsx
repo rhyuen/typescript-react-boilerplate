@@ -8,7 +8,7 @@ import NotFound from "../NotFound";
 
 
 interface Props {
-  handleLogin(): any;
+  handleLogin: () => void;
 }
 
 const UnauthedHome: React.FunctionComponent<Props> = ({ handleLogin }) => {
