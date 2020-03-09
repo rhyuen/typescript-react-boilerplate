@@ -6,7 +6,7 @@ interface Props {
   onClick?: any;
 }
 
-const Card: React.FunctionComponent<Props> = styled.div`
+const Card: React.FunctionComponent<Props> = styled.article`
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 2px;
     background: white;

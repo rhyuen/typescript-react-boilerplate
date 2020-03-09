@@ -1,16 +1,23 @@
 import * as React from "react";
 import styled from "styled-components";
+import axios from "axios";
+import SubmitInput from "../shared/SubmitInput";
 
 const TextInput = styled.input`
     width: 100%;
-    height: 100px;
-    margin-bottom: 20px;
-    padding: 20px;
-    border: none;
+    height: 100px;    
+    border: 1px solid rgba(0, 0,0,0.1);
+    border-radius: 2px;
 
     &:focus{
         outline: none;
     }
+`;
+
+
+const StyledForm = styled.form`
+    margin: 20px 0;
+    padding: 0;
 `;
 
 const NewPost: React.FunctionComponent<{}> = () => {
@@ -23,18 +30,27 @@ const NewPost: React.FunctionComponent<{}> = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(text);
-        setText("");
+        axios.post("/api/newPost", { text: text }, { withCredentials: true })
+            .then(res => {
+                console.log(res.data.payload);
+                setText("");
+            })
+            .catch(e => {
+                console.error("Issue with submitting new post.");
+                console.error(e)
+            });
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <StyledForm onSubmit={handleSubmit}>
             <TextInput
                 onChange={handleChange}
+                name="text"
                 value={text}
                 placeholder="Your thoughts go here.">
             </TextInput>
-        </form>
+            <SubmitInput type="submit" value="Post" />
+        </StyledForm>
     );
 }
 

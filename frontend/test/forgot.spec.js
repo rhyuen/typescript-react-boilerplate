@@ -2,7 +2,7 @@ const axios = require("axios");
 const targetURL = "http://localhost:3000/api/forgot";
 const signupURL = "http://localhost:3000/api/signup";
 
-describe("Forgotten Email", () => {
+describe("Forgotten Email", async () => {
     let emailForTest = "";
     beforeAll(async () => {
         emailForTest = `forgotemail${Math.floor(Math.random() * 1000)}@forgot.ca`;

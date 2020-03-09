@@ -95,24 +95,25 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
         <section>
           {
             payload.isLoading ?
-              <Spinner /> :
-              payload.data.map((item: Post) => {
-                return (
-                  <Card key={item.post_id}>
-                    <Header>{item.post_name}</Header>
-                    <SubTitle>{item.post_create}</SubTitle>
-                    <p>{item.post_content}</p>
-                    <CommentsButton name={item.post_id} onClick={handlePostClick}>Comments: {item.post_comments.length}</CommentsButton>
-                  </Card>
-                );
-              })
+              <Spinner>Posts are loading.</Spinner> :
+              payload.data.length === 0 ? <p>You haven't made any posts yet.</p> :
+                payload.data.map((item: Post) => {
+                  return (
+                    <Card key={item.post_id}>
+                      <Header>{item.post_name}</Header>
+                      <SubTitle>{item.post_create}</SubTitle>
+                      <p>{item.post_content}</p>
+                      <CommentsButton name={item.post_id} onClick={handlePostClick}>Comments: {item.post_comments.length}</CommentsButton>
+                    </Card>
+                  );
+                })
           }
         </section>
       </TwoCol>
       <TwoCol>
         {
           payload.isLoading ?
-            <Spinner /> :
+            <Spinner>Comments go here.</Spinner> :
             payload.selectedPostID === "none" ?
               <EmptyDisclaimer>No Post Selected.<br /> Click a post to show some comments.</EmptyDisclaimer> :
               payload.data.filter((post: Post) => (post.post_id === payload.selectedPostID))[0]

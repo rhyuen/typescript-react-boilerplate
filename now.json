@@ -1,8 +1,7 @@
 {
-    "name": "logints",
     "version": 2,
     "alias": [
-        "rylogints"
+        "lacios"
     ],
     "env": {
         "NODE_ENV": "development",

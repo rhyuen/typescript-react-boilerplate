@@ -5,6 +5,7 @@ import axios from "axios";
 import Grid from "../Grid";
 import Header from "../shared/Header";
 import OneCol from "../shared/OneCol";
+import TwoCol from "../shared/TwoCol";
 
 interface Props {
   handleLogin(): any;
@@ -51,6 +52,7 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
 
   return (
     <Grid>
+
       <OneCol>
         <Header>Login</Header>
         <form onSubmit={handleFormSubmit}>
@@ -71,10 +73,11 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
           /><br />
           <SubmitInput type="submit" value="Login" />
         </form>
-      </OneCol>
+      </OneCol>      
     </Grid>
   );
 };
+
 
 
 

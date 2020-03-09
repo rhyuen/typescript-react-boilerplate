@@ -9,11 +9,12 @@
         "noEmit": true,
         "strict": true,
         "sourceMap": true,
-        "isolatedModules": true,
+        "isolatedModules": false,
         "removeComments": true,
         "esModuleInterop": true,
         "noImplicitAny": true,
         "types": [
+            "jest",
             "node"
         ]
     },

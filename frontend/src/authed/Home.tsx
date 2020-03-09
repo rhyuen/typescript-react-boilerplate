@@ -1,9 +1,11 @@
 import * as React from "react";
 import { v4 } from "uuid";
-import styled from 'styled-components';
 import Card, { SubTitle, Header } from "../shared/Card";
 import axios from "axios";
 import NewPost from "./NewPost";
+import Spinner from "../shared/Spinner";
+import OneCol from "../shared/OneCol";
+import ContentFrame from "../shared/ContentFrame";
 
 interface PostResult {
   name: string;
@@ -48,30 +50,32 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
     });
   }, []);
 
+  //TODO: DE17, ADD function to update State from form submit.
+
   return (
-    <div>
-      <h1>Things that happened while you were gone.</h1>
-      {
-        data.loading ?
-          <p>stuff's loading.</p> :
-          <>
-            <div>
-              <NewPost />
-              {
-                data.payload.map((r: PostResult) => {
-                  return (
-                    <Card key={v4()}>
-                      <Header>{r.name}</Header>
-                      <SubTitle>{r.created_at}</SubTitle>
-                      <p>{r.content}</p>
-                    </Card>
-                  );
-                })
-              }
-            </div>
-          </>
-      }
-    </div >
+    <ContentFrame>
+      <OneCol>
+        <NewPost />
+        {
+          data.loading ?
+            <Spinner>Your latest updates are on their way!</Spinner> :
+            data.payload.length === 0 ? <p>It seems you don't have any updates from anyone.</p> :
+              <>
+                {
+                  data.payload.map((r: PostResult) => {
+                    return (
+                      <Card key={v4()}>
+                        <Header>{r.name}</Header>
+                        <SubTitle>{r.created_at}</SubTitle>
+                        <p>{r.content}</p>
+                      </Card>
+                    );
+                  })
+                }
+              </>
+        }
+      </OneCol>
+    </ContentFrame >
   );
 };
 

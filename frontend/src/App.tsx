@@ -22,7 +22,7 @@ interface State {
 
 const ContentFrame: React.FunctionComponent<{}> = styled.section`
   background-color: white;
-  grid-column: 2 / span 12;
+  grid-column: 2 / span 12;  
 `;
 
 class App extends React.Component<Props, State> {

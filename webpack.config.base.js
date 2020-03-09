@@ -36,6 +36,7 @@ module.exports = {
     plugins: [
         new HTMLWebpackPlugin({
             template: path.join(__dirname, "frontend/src/templates/index.html"),
+            favicon: path.join(__dirname, "frontend/src/images/lacios_favicon.png"),
             filename: "index.html",
             inject: "body",
             title: "Front End Boilerplate Project"
