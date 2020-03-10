@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 interface Props {
-  index?: String;
+  index?: string;
   onClick?: any;
 }
 

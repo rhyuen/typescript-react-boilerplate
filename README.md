@@ -1,9 +1,18 @@
 # ABOUT
 
-Typescript authentication boiler plate.
+Social Network in Typescript with Custom Auth, because that's what weirdos do.
 
 
-# UPDATES
+## UPDATES
+
+*MR 8, 2020*
+1. Favicon updated
+2. Styling Changes made to Unauthed Homepage
+
+Attempts
+1. Added CircleCi config.yml
+
+
 
 *November 18, 2019*
 1. Adding Papertrail and Winston for Logging.

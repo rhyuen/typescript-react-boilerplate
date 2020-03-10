@@ -7,6 +7,9 @@ import BannerFullSection from "./BannerComponents/BannerFullSection"
 import BannerHalfSection from "./BannerComponents/BannerHalfSection"
 import Header from "../shared/Header"
 import Grid from "../Grid";
+import HorizontalList from "./BannerComponents/BannerHorizontalList";
+import VerticalList from "./BannerComponents/BannerVerticalList";
+import HorizontalListItem from "./BannerComponents/BannerHorizListItem"
 
 interface Props { }
 
@@ -18,18 +21,29 @@ const Banner_Nav = styled.section`
 const Banner_Footer = styled.section`
   display: flex;
   grid-column: span 12;
+  align-items: center;
   justify-content: center;
 `;
 
-const StyledList = styled.ul`
-  list-style-type: none
+const BannerHeader = styled.h1`
+  font-weight: bold;
+  font-size: 32px;
+  text-align: center;
 `;
+
+
 
 const StyledListItem = styled.li`
   display: inline;
-  margin-left: 40px;  
+  margin: 20px;  
   font-size: 18px;  
   font-weight: bold;
+`;
+
+const VerticalListItem = styled.li`
+  padding: 0;
+  margin: 20px;
+  text-align: center;
 `;
 
 const StyledLink = styled(Link)`
@@ -53,46 +67,58 @@ const Footer = styled.footer`
   background: black;
 `;
 
+const BannerFullSectionContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+`;
+
 
 const Landing: React.FunctionComponent<Props> = () => {
   return (
     <Grid>
       <BannerRoot>
         <Banner_Nav>
-          <StyledList>LAICOS</StyledList>
-          <StyledList>
-            <StyledListItem><StyledLink to="/forgot">Lost?</StyledLink></StyledListItem>
-            <StyledListItem><StyledLink to="/login">Sign In</StyledLink></StyledListItem>
-            <StyledListItem><Link to="/signup"><ClickButton>Get Started</ClickButton></Link></StyledListItem>
-          </StyledList>
+          <HorizontalList><strong>LAICOS</strong></HorizontalList>
+          <HorizontalList>
+            <HorizontalListItem ><StyledLink to="/forgot">Lost?</StyledLink></HorizontalListItem>
+            <HorizontalListItem ><StyledLink to="/login">Sign In</StyledLink></HorizontalListItem>
+            <HorizontalListItem >
+              <StyledLink to="/signup">
+                <ClickButton>Get Started</ClickButton>
+              </StyledLink>
+            </HorizontalListItem>
+          </HorizontalList>
         </Banner_Nav>
         <BannerFullSection>
-          <div>
-            <Header>LAICOS: Another Social Network for the ages.</Header>
-            <StyledList>
-              <li>Begin sharing inane thoughts that have no business in the world</li>
-              <li>It's <strong>SOCIAL</strong>: <em>backwards</em>.</li>
-            </StyledList>
-          </div>
+          <BannerFullSectionContent>
+            <BannerHeader>LAICOS: Another Social Network for the ages.</BannerHeader>
+            <VerticalList>
+              <VerticalListItem><strong>Begin sharing inane thoughts that have no business in the world.</strong></VerticalListItem>
+              <VerticalListItem>It's <strong>SOCIAL</strong>: <em>backwards</em>.</VerticalListItem>
+              <VerticalListItem><StyledListItem><Link to="/signup"><ClickButton>Get Started</ClickButton></Link></StyledListItem></VerticalListItem>
+              <VerticalListItem>Already have an account? &nbsp;<StyledLink to="/login">Sign in</StyledLink>.</VerticalListItem>
+            </VerticalList>
+          </BannerFullSectionContent>
         </BannerFullSection>
         <Banner_Footer>
-          <StyledList>
-            <StyledListItem>Bots</StyledListItem>
-            <StyledListItem>Surveillance</StyledListItem>
-            <StyledListItem>Frivolity</StyledListItem>
-            <StyledListItem>Tailored just for you.</StyledListItem>
-          </StyledList>
+          <HorizontalList>
+            <HorizontalListItem >Bots</HorizontalListItem>
+            <HorizontalListItem >Surveillance</HorizontalListItem>
+            <HorizontalListItem >Frivolity</HorizontalListItem>
+            <HorizontalListItem >Tailored just for you.</HorizontalListItem>
+          </HorizontalList>
         </Banner_Footer>
       </BannerRoot>
       <BannerRoot>
         <BannerHalfSection />
         <BannerHalfSection>
-          <StyledList>
+          <VerticalList>
             <Header>Includes the following features:</Header>
             <li>Share your thoughts</li>
             <li>Make Friends</li>
             <li>Contribute to the Panopticon</li>
-          </StyledList>
+          </VerticalList>
         </BannerHalfSection>
       </BannerRoot>
       <Footer></Footer>

@@ -6,6 +6,7 @@ import NewPost from "./NewPost";
 import Spinner from "../shared/Spinner";
 import OneCol from "../shared/OneCol";
 import ContentFrame from "../shared/ContentFrame";
+import TwoCol from "../shared/TwoCol";
 
 interface PostResult {
   name: string;
@@ -54,7 +55,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <ContentFrame>
-      <OneCol>
+      <TwoCol>
         <NewPost />
         {
           data.loading ?
@@ -74,7 +75,10 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
                 }
               </>
         }
-      </OneCol>
+      </TwoCol>
+      <TwoCol>
+        <h1>Side Column</h1>
+      </TwoCol>
     </ContentFrame >
   );
 };

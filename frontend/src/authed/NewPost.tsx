@@ -4,16 +4,23 @@ import axios from "axios";
 import SubmitInput from "../shared/SubmitInput";
 
 const TextInput = styled.input`
+    box-sizing: border-box;
     width: 100%;
     height: 100px;    
     border: 1px solid rgba(0, 0,0,0.1);
     border-radius: 2px;
+    padding: 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
 
     &:focus{
         outline: none;
     }
 `;
 
+const TitleInput = styled(TextInput)`
+    height: 50px;
+`;
 
 const StyledForm = styled.form`
     margin: 20px 0;
@@ -22,18 +29,34 @@ const StyledForm = styled.form`
 
 const NewPost: React.FunctionComponent<{}> = () => {
     const [text, setText] = React.useState<string>();
+    const [title, setTitle] = React.useState<string>(`Status for ${new Date().toLocaleDateString()}`);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
         setText(value);
     }
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setTitle(value);
+    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        axios.post("/api/newPost", { text: text }, { withCredentials: true })
+
+        const payload = {
+            text: text, title: title
+        };
+
+        setTitle("");
+        setText("");
+
+        ///TODO: mr8/20 make it so that it doesn't block when submitted.
+        // TODO: do a modal here to say 'thanks for your contribution'
+        // TODO: do a notification if it fails.
+
+        axios.post("/api/newPost", payload, { withCredentials: true })
             .then(res => {
                 console.log(res.data.payload);
-                setText("");
             })
             .catch(e => {
                 console.error("Issue with submitting new post.");
@@ -43,6 +66,11 @@ const NewPost: React.FunctionComponent<{}> = () => {
 
     return (
         <StyledForm onSubmit={handleSubmit}>
+            <TitleInput
+                name="title"
+                value={title}
+                onChange={handleTitleChange}
+                placeholder="A title for your thoughts?" />
             <TextInput
                 onChange={handleChange}
                 name="text"

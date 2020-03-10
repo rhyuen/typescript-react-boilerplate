@@ -20,6 +20,7 @@
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
     "@types/react-native": "^0.57.65",
+    "@types/styled-components": "^5.0.1",
     "babel-loader": "8.0.5",
     "babel-plugin-styled-components": "^1.10.6",
     "clean-webpack-plugin": "^3.0.0",
@@ -38,6 +39,7 @@
     "path": "0.12.7",
     "prettier": "1.16.4",
     "react-test-renderer": "16.8.1",
+    "styled-components": "^5.0.1",
     "typescript": "^3.5.2",
     "webpack": "4.42.0",
     "webpack-dev-server": "3.1.14",
@@ -54,7 +56,6 @@
     "@types/pg": "^7.4.14",
     "@types/react-router-dom": "4.3.4",
     "@types/redis": "^2.8.14",
-    "@types/styled-components": "^4.1.16",
     "@types/uuid": "^3.4.5",
     "@types/validator": "^10.11.2",
     "axios": "0.19.0",
@@ -75,7 +76,6 @@
     "redis": "^2.8.0",
     "regenerator-runtime": "^0.13.3",
     "sparkpost": "^2.1.3",
-    "styled-components": "4.1.3",
     "uuid": "3.3.2",
     "validator": "^11.1.0",
     "webpack-bundle-analyzer": "3.6.0",
@@ -89,7 +89,8 @@
     "now-build": "webpack --config webpack.config.dev.js",
     "dev": "now dev --listen 9000 -A now.json",
     "test:dev": "jest --watch",
-    "test:ci": "jest --outputCoverage=true",
+    "start:ci": "NODE_ENV=ci now dev --debug --listen 9911 --token $CIRCLECI_NOW_TOKEN & wait-on tcp:9911",
+    "test:ci": "NODE_ENV=ci jest --collectCoverage=true --testTimeOut=30000",
     "dbinit": "node ./dbinit/initializetables.js"
   }
 }
