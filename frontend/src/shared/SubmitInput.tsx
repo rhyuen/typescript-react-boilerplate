@@ -5,7 +5,7 @@ const SubmitInput = styled.input`
     background: black;
     color: white;
     text-transform: uppercase;
-    padding: 1rem;
+    padding: 5px 10px;
     font-size: 16px;
     font-weight: bold;
     transition: all 0.2s linear 0s;    

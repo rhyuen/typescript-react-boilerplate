@@ -1,12 +1,14 @@
 import * as React from "react";
 import { v4 } from "uuid";
 import Card, { SubTitle, Header } from "../shared/Card";
+import styled from "styled-components";
 import axios from "axios";
 import NewPost from "./NewPost";
 import Spinner from "../shared/Spinner";
 import OneCol from "../shared/OneCol";
 import ContentFrame from "../shared/ContentFrame";
 import TwoCol from "../shared/TwoCol";
+import List from "../shared/List";
 
 interface PostResult {
   name: string;
@@ -61,7 +63,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
           data.loading ?
             <Spinner>Your latest updates are on their way!</Spinner> :
             data.payload.length === 0 ? <p>It seems you don't have any updates from anyone.</p> :
-              <>
+              <List>
                 {
                   data.payload.map((r: PostResult) => {
                     return (
@@ -73,7 +75,7 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
                     );
                   })
                 }
-              </>
+              </List>
         }
       </TwoCol>
       <TwoCol>

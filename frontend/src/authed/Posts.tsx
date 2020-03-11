@@ -115,7 +115,10 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
           payload.isLoading ?
             <Spinner>Comments go here.</Spinner> :
             payload.selectedPostID === "none" ?
-              <EmptyDisclaimer>No Post Selected.<br /> Click a post to show some comments.</EmptyDisclaimer> :
+              <EmptyDisclaimer>
+                No Post Selected.<br />
+                Click a post to show some comments.
+              </EmptyDisclaimer> :
               payload.data.filter((post: Post) => (post.post_id === payload.selectedPostID))[0]
                 .post_comments.map((c: Comment) => {
                   return (
@@ -133,21 +136,20 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const CommentsButton = styled.button`
-  padding: 10px;
+  padding: 5px 10px;
   text-transform: uppercase;
-  color: white;
-  background: black;
+  color: black;
+  background: white;
   font-size: 14px;
   font-weight: bold;
   border: 2px solid black;
 
-  &:focus{
-    background: white;
+  &:focus{   
     color: black;    
     outline: none;
   }
   &:hover{
-    background: white;
+    background: papayawhip;
     color: black;
   }
 `;

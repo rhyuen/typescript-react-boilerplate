@@ -1,3 +1,7 @@
+## BUILD STATUS
+
+[![CircleCI](https://circleci.com/gh/rhyuen/typescript-react-boilerplate.svg?style=svg)](https://app.circleci.com/pipelines/github/rhyuen/typescript-react-boilerplate)
+
 # ABOUT
 
 Social Network in Typescript with Custom Auth, because that's what weirdos do.

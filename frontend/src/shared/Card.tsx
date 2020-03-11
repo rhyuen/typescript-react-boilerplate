@@ -11,15 +11,14 @@ const Card: React.FunctionComponent<Props> = styled.article`
     border-radius: 2px;
     background: white;
     padding: 20px;
-    margin-bottom: 20px;    
-    box-shadow: 2px 2px rgba(0,0,0,0.1);
+    margin-bottom: 20px;        
 `;
 
 export default Card;
 
 export const Header = styled.h1`
     font-size: 20px;
-    margin-bottom: 0;
+    margin: 0px;    
     padding-bottom: 0;
 `;
 
