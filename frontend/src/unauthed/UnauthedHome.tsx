@@ -5,6 +5,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Forgot from "./Forgot";
 import NotFound from "../NotFound";
+import Grid from "../Grid";
 
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
 const UnauthedHome: React.FunctionComponent<Props> = ({ handleLogin }) => {
   return (
     <HashRouter>
-      <div>
+      <Grid>
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route
@@ -29,7 +30,7 @@ const UnauthedHome: React.FunctionComponent<Props> = ({ handleLogin }) => {
             render={() => <Redirect to="/" />} />
           <Route component={NotFound} />
         </Switch>
-      </div>
+      </Grid>
     </HashRouter>
   );
 };

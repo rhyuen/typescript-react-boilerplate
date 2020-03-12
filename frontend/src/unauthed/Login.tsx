@@ -2,13 +2,12 @@ import * as React from "react";
 import TextInput from "../shared/TextInput";
 import SubmitInput from "../shared/SubmitInput"
 import axios from "axios";
-import Grid from "../Grid";
 import Header from "../shared/Header";
-import OneCol from "../shared/OneCol";
 import TwoCol from "../shared/TwoCol";
+import ContentFrameCenter from "../shared/ContentFrameCenter";
 
 interface Props {
-  handleLogin(): any;
+  handleLogin: () => void;
 }
 const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
   const [credentials, setCredentials] = React.useState({
@@ -51,10 +50,9 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
   };
 
   return (
-    <Grid>
-
-      <OneCol>
-        <Header>Login</Header>
+    <ContentFrameCenter>
+      <TwoCol>
+        <Header>Sign in to your account.</Header>
         <form onSubmit={handleFormSubmit}>
           <TextInput
             type="text"
@@ -73,8 +71,11 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
           /><br />
           <SubmitInput type="submit" value="Login" />
         </form>
-      </OneCol>      
-    </Grid>
+      </TwoCol>
+      <TwoCol>
+        <h1>A picture goes here.</h1>
+      </TwoCol>
+    </ContentFrameCenter>
   );
 };
 

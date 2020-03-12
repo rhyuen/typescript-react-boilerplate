@@ -3,7 +3,9 @@ import styled from "styled-components";
 import axios from "axios";
 import { v4 } from "uuid";
 import Spinner from "../shared/Spinner";
+import ContentFrameCenter from "../shared/ContentFrameCenter";
 import Card, { Header } from "../shared/Card";
+import TwoCol from "../shared/TwoCol";
 import ClickButton from "../shared/ClickButton";
 
 interface FriendLink {
@@ -55,8 +57,8 @@ const Friends: React.FunctionComponent<Props> = (props: Props) => {
   }, []);
 
   return (
-    <div>
-      <div>
+    <ContentFrameCenter>
+      <TwoCol>
         <h1>My Friends</h1>
         {
           friendsList.isLoading ? <Spinner>Getting your friends.</Spinner> :
@@ -77,12 +79,12 @@ const Friends: React.FunctionComponent<Props> = (props: Props) => {
                 }
               </div>
         }
-      </div>
-      <div>
+      </TwoCol>
+      <TwoCol>
         <h1>Potential Friends</h1>
         <SuggestedFriends />
-      </div>
-    </div>
+      </TwoCol>
+    </ContentFrameCenter>
   );
 };
 

@@ -15,7 +15,7 @@ interface Props { }
 
 const Banner_Nav = styled.section`
   display: flex;
-  grid-column: span 12;
+  grid-column: span 12;  
   justify-content: space-between;
 `;
 const Banner_Footer = styled.section`
@@ -76,7 +76,7 @@ const BannerFullSectionContent = styled.div`
 
 const Landing: React.FunctionComponent<Props> = () => {
   return (
-    <Grid>
+    <>
       <BannerRoot>
         <Banner_Nav>
           <HorizontalList><strong>LAICOS</strong></HorizontalList>
@@ -122,7 +122,7 @@ const Landing: React.FunctionComponent<Props> = () => {
         </BannerHalfSection>
       </BannerRoot>
       <Footer></Footer>
-    </Grid>
+    </>
   );
 };
 

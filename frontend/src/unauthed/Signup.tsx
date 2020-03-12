@@ -1,11 +1,10 @@
 import * as React from "react";
-import Grid from "../Grid";
-import styled from "styled-components";
 import Header from "../shared/Header"
 import SubmitInput from "../shared/SubmitInput"
 import TextInput from "../shared/TextInput"
 import axios from "axios";
-import OneCol from "../shared/OneCol";
+import ContentFrameCenter from "../shared/ContentFrameCenter";
+import TwoCol from "../shared/TwoCol";
 
 interface Props { }
 
@@ -60,8 +59,8 @@ const Signup: React.FunctionComponent<{}> = () => {
   };
 
   return (
-    <Grid>
-      <OneCol>
+    <ContentFrameCenter>
+      <TwoCol>
         <Header>Sign up for an account.</Header>
         <form onSubmit={handleSubmit}>
           <TextInput
@@ -105,8 +104,11 @@ const Signup: React.FunctionComponent<{}> = () => {
           /><br />
           <SubmitInput type="submit" value="signup" />
         </form>
-      </OneCol>
-    </Grid>
+      </TwoCol>
+      <TwoCol>
+        <h1>Be sure to choose an extra long password that you only use for this website!</h1>
+      </TwoCol>
+    </ContentFrameCenter>
   );
 };
 

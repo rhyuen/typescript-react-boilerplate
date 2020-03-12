@@ -30,6 +30,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
         const newPost = `
             insert into posts (post_id, user_id, page_id, name, medialink, content) 
             values ($1, $2, $3, $4, $5, $6)
+            returning *
         `;
 
         const { rows }: any = await query(newPost, [v4(), user_id, currentPageId, title, "medialink blah", text]);

@@ -1,20 +1,14 @@
 import * as React from "react";
 import { v4 } from "uuid";
 import Card, { SubTitle, Header } from "../shared/Card";
-import styled from "styled-components";
 import axios from "axios";
 import NewPost from "./NewPost";
 import Spinner from "../shared/Spinner";
-import OneCol from "../shared/OneCol";
 import ContentFrame from "../shared/ContentFrame";
 import TwoCol from "../shared/TwoCol";
 import List from "../shared/List";
+import { PostResult } from "../../types/index";
 
-interface PostResult {
-  name: string;
-  content: string;
-  created_at: Date;
-}
 
 interface State {
   loading: boolean;
@@ -55,10 +49,20 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
 
   //TODO: DE17, ADD function to update State from form submit.
 
+  const updatePosts = (latest: PostResult) => {
+    console.log("updating the posts");
+    console.log(latest);
+    setData(ps => {
+      return {
+        ...ps, payload: ps.payload.concat(latest)
+      }
+    });
+  }
+
   return (
     <ContentFrame>
       <TwoCol>
-        <NewPost />
+        <NewPost updatePosts={updatePosts} />
         {
           data.loading ?
             <Spinner>Your latest updates are on their way!</Spinner> :

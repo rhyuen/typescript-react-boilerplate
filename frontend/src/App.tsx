@@ -51,7 +51,7 @@ class App extends React.Component<Props, State> {
     } finally {
       const { authenticatedFlag } = this.state;
       window.localStorage.setItem(authenticatedFlag, "loggedOut");
-      return this.setState({
+      this.setState({
         signedIn: false
       });
     }
