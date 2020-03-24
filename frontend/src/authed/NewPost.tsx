@@ -33,27 +33,27 @@ interface Props {
 }
 
 const NewPost: React.FunctionComponent<Props> = ({ updatePosts }: Props) => {
-    const [text, setText] = React.useState<string>();
-    const [title, setTitle] = React.useState<string>(`Status for ${new Date().toLocaleDateString()}`);
+    const [content, setContent] = React.useState<string>();
+    const [name, setName] = React.useState<string>(`Status for ${new Date().toLocaleDateString()}`);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setText(value);
+        setContent(value);
     }
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setTitle(value);
+        setName(value);
     }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         const payload = {
-            text: text, title: title,
+            name, content
         };
 
-        setTitle("");
-        setText("");
+        setContent("");
+        setName(`Status for ${new Date().toLocaleDateString()}`);
 
         ///TODO: mr8/20 make it so that it doesn't block when submitted.
         // TODO: do a modal here to say 'thanks for your contribution'
@@ -66,7 +66,7 @@ const NewPost: React.FunctionComponent<Props> = ({ updatePosts }: Props) => {
                 console.log(res.data);
                 console.log("POST Payload END");
                 const { name, content, created_at } = res.data.payload[0];
-                updatePosts({ name: name, content: content, created_at: created_at });
+                updatePosts({ name, content, created_at });
             })
             .catch(e => {
                 console.error("Issue with submitting new post.");
@@ -78,13 +78,13 @@ const NewPost: React.FunctionComponent<Props> = ({ updatePosts }: Props) => {
         <StyledForm onSubmit={handleSubmit}>
             <TitleInput
                 name="title"
-                value={title}
+                value={name}
                 onChange={handleTitleChange}
                 placeholder="A title for your thoughts?" />
             <TextInput
                 onChange={handleChange}
                 name="text"
-                value={text}
+                value={content}
                 placeholder="Your thoughts go here.">
             </TextInput>
             <SubmitInput type="submit" value="Post" />

@@ -5,6 +5,10 @@ import TextInput from "../shared/TextInput"
 import axios from "axios";
 import ContentFrameCenter from "../shared/ContentFrameCenter";
 import TwoCol from "../shared/TwoCol";
+import RowContainer from "../shared/RowContainer";
+import StyledLink from "../shared/StyledLink";
+import Loading from "../shared/Modal/LoadingModal";
+import Modal from "../shared/Modal/Modal";
 
 interface Props { }
 
@@ -17,6 +21,14 @@ const Signup: React.FunctionComponent<{}> = () => {
     password: "",
     confirmation: ""
   });
+
+  const [isCreationLoading, updateCreationLoading] = React.useState<boolean>(false);
+  const [isModalVisible, updateModalVisible] = React.useState<boolean>(false);
+
+  const handleModalClose = () => {
+    updateModalVisible(false);
+  }
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,7 +43,7 @@ const Signup: React.FunctionComponent<{}> = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("submit for signup done.");
-
+    updateCreationLoading(true);
     axios
       .post("/api/signup", {
         email: formValues.email,
@@ -41,6 +53,7 @@ const Signup: React.FunctionComponent<{}> = () => {
       })
       .then(res => {
         console.log(res.data);
+        updateCreationLoading(false);
         updateFormValues(prev => {
           return {
             ...prev,
@@ -51,22 +64,35 @@ const Signup: React.FunctionComponent<{}> = () => {
             confirmation: ""
           };
         });
+        updateModalVisible(true);
       })
       .catch(e => {
         console.log(e);
         console.log(e.response.data);
+        console.error("it seems we have errored out.");
       });
   };
 
   return (
     <ContentFrameCenter>
+      {
+        isCreationLoading ? <Loading>Waiting on your new account to be made...</Loading> : null
+      }
+      {
+        isModalVisible ?
+          <Modal header="Account created."
+            confirmation={true}
+            onClick={handleModalClose}>
+            Your account has been created.  Click here to login <StyledLink to="/login">Login</StyledLink>
+          </Modal> : null
+      }
       <TwoCol>
         <Header>Sign up for an account.</Header>
         <form onSubmit={handleSubmit}>
           <TextInput
             type="text"
             name="email"
-            placeholder="email"
+            placeholder="Email"
             onChange={handleInputChange}
             value={formValues.email}
           />
@@ -74,7 +100,7 @@ const Signup: React.FunctionComponent<{}> = () => {
           <TextInput
             type="text"
             name="first_name"
-            placeholder="First name"
+            placeholder="First Name"
             onChange={handleInputChange}
             value={formValues.first_name}
           />
@@ -90,7 +116,7 @@ const Signup: React.FunctionComponent<{}> = () => {
           <TextInput
             type="password"
             name="password"
-            placeholder="password"
+            placeholder="Password (16 char min.)"
             onChange={handleInputChange}
             value={formValues.password}
           />
@@ -98,11 +124,14 @@ const Signup: React.FunctionComponent<{}> = () => {
           <TextInput
             type="password"
             name="confirmation"
-            placeholder="password"
+            placeholder="Password Again (16 char min.)"
             onChange={handleInputChange}
             value={formValues.confirmation}
           /><br />
-          <SubmitInput type="submit" value="signup" />
+          <RowContainer>
+            <SubmitInput type="submit" value="signup" />
+            <StyledLink to="/login">Already have an account?</StyledLink>
+          </RowContainer>
         </form>
       </TwoCol>
       <TwoCol>

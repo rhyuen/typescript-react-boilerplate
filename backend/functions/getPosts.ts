@@ -44,7 +44,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
                 c.created_at as comment_create, 
                 c.last_modified as comment_mod
             from posts p
-            inner join comments c 
+            left join comments c 
             on(p.post_id = c.post_id)
             inner join users u
             on(c.user_id = u.user_id)

@@ -54,6 +54,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       confirmation: `You've successfully signed up using the email address: '${email}'.`
     });
   } catch (e) {
+    console.log("Something wrong with Signup", e);
     logger.error(e);
     return res.status(500).json({
       message: "An error has occurred.",

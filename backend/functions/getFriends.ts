@@ -26,8 +26,17 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
             where friender_id = $1 or friendee_id = $1;
         `;
         const { rows }: any = await query(getFriends, [user_id]);
+        console.log("FRIENDS")
+        console.log(rows);
 
-        const payload = rows.map((r: any) => r);
+        interface Relationship {
+            friender_id: string;
+            friendee_id: string;
+            accepted: boolean;
+            created_at: string;
+            last_modified: string;
+        }
+        const payload = rows.map((r: Relationship) => r);
 
         return res.status(200).json({
             payload

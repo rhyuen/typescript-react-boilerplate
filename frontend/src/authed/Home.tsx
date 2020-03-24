@@ -5,9 +5,11 @@ import axios from "axios";
 import NewPost from "./NewPost";
 import Spinner from "../shared/Spinner";
 import ContentFrame from "../shared/ContentFrame";
-import TwoCol from "../shared/TwoCol";
 import List from "../shared/List";
 import { PostResult } from "../../types/index";
+import PostSingle from "../shared/PostSingle";
+import GenericCol from "../shared/GenericCol";
+import EmptyDisclaimer from "../shared/EmptyDisclaimer";
 
 
 interface State {
@@ -61,30 +63,33 @@ const Home: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <ContentFrame>
-      <TwoCol>
+      <GenericCol size={3}>
+        <h1>Side One</h1>
+      </GenericCol>
+      <GenericCol size={6}>
         <NewPost updatePosts={updatePosts} />
         {
           data.loading ?
             <Spinner>Your latest updates are on their way!</Spinner> :
-            data.payload.length === 0 ? <p>It seems you don't have any updates from anyone.</p> :
+            data.payload.length === 0 ? <EmptyDisclaimer>It seems you don't have any updates from anyone.</EmptyDisclaimer> :
               <List>
                 {
                   data.payload.map((r: PostResult) => {
                     return (
-                      <Card key={v4()}>
+                      <PostSingle key={v4()}>
                         <Header>{r.name}</Header>
                         <SubTitle>{r.created_at}</SubTitle>
                         <p>{r.content}</p>
-                      </Card>
+                      </PostSingle>
                     );
                   })
                 }
               </List>
         }
-      </TwoCol>
-      <TwoCol>
-        <h1>Side Column</h1>
-      </TwoCol>
+      </GenericCol>
+      <GenericCol size={3}>
+        <h1>Side Two</h1>
+      </GenericCol>
     </ContentFrame >
   );
 };

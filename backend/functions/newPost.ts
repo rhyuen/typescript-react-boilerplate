@@ -17,7 +17,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
 
         const { user_id } = await Auth.getFromToken(req);
 
-        const { text, title } = req.body;
+        const { name, content } = req.body;
 
         const getPageID = `
             select page_id 
@@ -33,7 +33,7 @@ module.exports = async (req: NowRequest, res: NowResponse) => {
             returning *
         `;
 
-        const { rows }: any = await query(newPost, [v4(), user_id, currentPageId, title, "medialink blah", text]);
+        const { rows }: any = await query(newPost, [v4(), user_id, currentPageId, name, "medialink blah", content]);
 
         const payload = rows.map((r: any) => r);
 

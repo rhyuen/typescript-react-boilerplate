@@ -6,6 +6,21 @@
 
 Social Network in Typescript with Custom Auth, because that's what weirdos do.
 
+Todo
+mr15, 2020
+- buttons for cards.
+- buttons ouside of the box
+- /posts gets all posts by user.  the sql query isn't working it seems
+
+
+other
+-col refactor for props
+-profile pages
+-friend cards clean up.
+-spacer component 
+
+
+
 
 ## UPDATES
 

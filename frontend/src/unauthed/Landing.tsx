@@ -7,6 +7,7 @@ import BannerFullSection from "./BannerComponents/BannerFullSection"
 import BannerHalfSection from "./BannerComponents/BannerHalfSection"
 import Header from "../shared/Header"
 import Grid from "../Grid";
+import StyledLink from "../shared/StyledLink";
 import HorizontalList from "./BannerComponents/BannerHorizontalList";
 import VerticalList from "./BannerComponents/BannerVerticalList";
 import HorizontalListItem from "./BannerComponents/BannerHorizListItem"
@@ -44,21 +45,6 @@ const VerticalListItem = styled.li`
   padding: 0;
   margin: 20px;
   text-align: center;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;  
-  padding-bottom: 10px;
-  border-bottom: 2px solid transparent;
-  color: black;
-
-  &:visited{
-    color: black;
-  }
-  &:hover{
-    border-bottom-color: black;
-  }
 `;
 
 const Footer = styled.footer`

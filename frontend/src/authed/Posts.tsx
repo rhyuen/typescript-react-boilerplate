@@ -3,9 +3,10 @@ import axios from "axios";
 import styled from "styled-components";
 import ContentFrame from "../shared/ContentFrame";
 import Card, { SubTitle, Header } from "../shared/Card";
-import TwoCol from "../shared/TwoCol";
 import Spinner from "../shared/Spinner";
 import NonCardHeader from "../shared/NonCardHeader";
+import GenericCol from "../shared/GenericCol";
+import EmptyDisclaimer from "../shared/EmptyDisclaimer"
 
 interface Post {
   post_id: string;
@@ -90,7 +91,7 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <ContentFrame>
-      <TwoCol>
+      <GenericCol size={6}>
         <NonCardHeader>Your Created Posts</NonCardHeader>
         <section>
           {
@@ -109,8 +110,8 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
                 })
           }
         </section>
-      </TwoCol>
-      <TwoCol>
+      </GenericCol>
+      <GenericCol size={6}>
         {
           payload.isLoading ?
             <Spinner>Comments go here.</Spinner> :
@@ -130,7 +131,7 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
                   );
                 })
         }
-      </TwoCol>
+      </GenericCol>
     </ContentFrame>
   );
 };
@@ -154,16 +155,6 @@ const CommentsButton = styled.button`
   }
 `;
 
-const EmptyDisclaimer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-color: rgba(0,0,0,0.5);
-  padding: 40px 20px;
-`;
 
 
 

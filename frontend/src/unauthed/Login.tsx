@@ -5,6 +5,9 @@ import axios from "axios";
 import Header from "../shared/Header";
 import TwoCol from "../shared/TwoCol";
 import ContentFrameCenter from "../shared/ContentFrameCenter";
+import RowContainer from "../shared/RowContainer";
+import StyledLink from "../shared/StyledLink";
+import LoadingModal from "../shared/Modal/LoadingModal";
 
 interface Props {
   handleLogin: () => void;
@@ -14,6 +17,8 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
     email: "",
     password: ""
   });
+
+  const [loading, updateLoading] = React.useState<boolean>(false);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,12 +33,15 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    updateLoading(true);
+
     setCredentials(credentials => {
       const { email, password } = credentials;
       axios
         .post("/api/login", { email, password })
         .then(res => {
           console.log(res.data);
+          updateLoading(false);
           handleLogin();
         })
         .catch(e => {
@@ -51,6 +59,9 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
 
   return (
     <ContentFrameCenter>
+      {
+        loading ? <LoadingModal>Checking your credentials...</LoadingModal> : null
+      }
       <TwoCol>
         <Header>Sign in to your account.</Header>
         <form onSubmit={handleFormSubmit}>
@@ -69,7 +80,10 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
             value={credentials.password}
             onChange={handleFormChange}
           /><br />
-          <SubmitInput type="submit" value="Login" />
+          <RowContainer>
+            <SubmitInput type="submit" value="Login" />
+            <StyledLink to="/forgot">Forgot your password?</StyledLink>
+          </RowContainer>
         </form>
       </TwoCol>
       <TwoCol>

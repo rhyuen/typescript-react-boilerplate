@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as Sentry from "@sentry/browser";
 import Grid from "./Grid";
-import OneCol from "./shared/OneCol";
+import GenericCol from "./shared/GenericCol";
 import Header from "./shared/Header";
+import ContentFrameCenter from "./shared/ContentFrameCenter";
 import ClickButton from "./shared/ClickButton";
 
 interface Props { }
@@ -36,19 +37,24 @@ export default class RootErrorBoundary extends React.Component<Props, State> {
     const { children } = this.props;
     return isError ? (
       <Grid>
-        <OneCol>
-          <Header>An error has occurred.</Header>
-          <p>
-            Try as one might, one can never really remove all the bugs.  My apologies for the inconvenience.  At some point in the future, a form with you can use to rant at this application's failings will appear.  However, until that day comes, kindly click on the button below and refresh (F5) the page.
+        <ContentFrameCenter>
+          <GenericCol size={12} >
+            <Header>An error has occurred.</Header>
+            <p>
+              Try as one might, one can never really remove all the bugs.  My apologies for the inconvenience.
           </p>
-          <ClickButton
-            onClick={() =>
-              Sentry.showReportDialog({ eventId: this.state.eventId })
-            }
-          >
-            Report feedback
+            <p>
+              At some point in the future, a form with you can use to rant at this application's failings will appear.  However, until that day comes, kindly click on the button below and refresh (F5) the page.
+          </p>
+            <ClickButton
+              onClick={() =>
+                Sentry.showReportDialog({ eventId: this.state.eventId })
+              }
+            >
+              Report feedback
           </ClickButton>
-        </OneCol>
+          </GenericCol>
+        </ContentFrameCenter>
       </Grid>
     ) : (
         children

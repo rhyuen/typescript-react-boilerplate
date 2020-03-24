@@ -8,7 +8,7 @@ const ClickButton = styled.button`
     padding: 0.75rem 1rem;
     border-radius: 2px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: bold;    
     transition: all 0.2s linear 0s;    
 
     &:hover{

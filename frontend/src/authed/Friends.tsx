@@ -7,6 +7,9 @@ import ContentFrameCenter from "../shared/ContentFrameCenter";
 import Card, { Header } from "../shared/Card";
 import TwoCol from "../shared/TwoCol";
 import ClickButton from "../shared/ClickButton";
+import EmptyDisclaimer from "../shared/EmptyDisclaimer";
+import Modal from "../shared/Modal/Modal";
+import GenericCol from "../shared/GenericCol";
 
 interface FriendLink {
   friender_id: string;
@@ -33,8 +36,13 @@ const Friends: React.FunctionComponent<Props> = (props: Props) => {
     friends: []
   });
 
+  const [isModalVisible, updateModalVisible] = React.useState<boolean>(false)
+
+  const handleModalVisible = () => {
+    updateModalVisible(!isModalVisible);
+  }
+
   React.useEffect(() => {
-    console.log("Using effect, yes again.");
     const url = "/api/getFriends";
     axios.get(url).then(res => {
       console.log(res.data.payload);
@@ -58,32 +66,36 @@ const Friends: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <ContentFrameCenter>
-      <TwoCol>
+      <GenericCol size={6}>
         <h1>My Friends</h1>
         {
           friendsList.isLoading ? <Spinner>Getting your friends.</Spinner> :
-            friendsList.friends.length === 0 ? <p>You don't have any friends yet.  You can add some below!</p> :
+            friendsList.friends.length === 0 ?
+              <EmptyDisclaimer>You don't have any friends yet.  You can add some below!</EmptyDisclaimer> :
               <div>
                 {
                   friendsList.friends.map((f: FriendLink) => {
                     return (
                       <Card key={v4()}>
-                        {f.friender_id}<br />
-                        {f.friendee_id}<br />
-                        {f.created_at}<br />
-                        {f.last_modified}<br />
-                        {f.accepted}<br />
+                        Friender {f.friender_id}<br />
+                        Friendee {f.friendee_id}<br />
+                        Created At: {f.created_at}<br />
+                        Accepted On: {f.accepted}<br />
                       </Card>
                     );
                   })
                 }
               </div>
         }
-      </TwoCol>
-      <TwoCol>
+        <ClickButton onClick={handleModalVisible}>Modal!</ClickButton>
+        {
+          isModalVisible ? <Modal header="Modal Visible" onClick={handleModalVisible} confirmation={true}>The dialogue box is there.</Modal> : null
+        }
+      </GenericCol>
+      <GenericCol size={6}>
         <h1>Potential Friends</h1>
         <SuggestedFriends />
-      </TwoCol>
+      </GenericCol>
     </ContentFrameCenter>
   );
 };
@@ -116,7 +128,7 @@ const SuggestedFriends: React.FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <div>
+    <>
       {
         loading ? <Spinner>Your friend suggestions are coming.</Spinner> :
           <SuggestionGrid>
@@ -129,7 +141,7 @@ const SuggestedFriends: React.FunctionComponent<{}> = () => {
             }
           </SuggestionGrid>
       }
-    </div>
+    </>
   )
 }
 export default Friends;
