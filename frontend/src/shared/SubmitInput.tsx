@@ -18,6 +18,13 @@ const SubmitInput = styled.input`
     &:focus{
         outline: none;
     }
+
+    &:disabled{
+        color: white;
+        text-decoration: line-through;
+        background: rgba(0,0,0,0.4);
+        border-color: grey;
+    }
 `;
 
 export default SubmitInput;

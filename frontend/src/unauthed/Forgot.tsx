@@ -6,6 +6,8 @@ import Header from "../shared/Header";
 import GenericCol from "../shared/GenericCol";
 import ContentFrameCenter from "../shared/ContentFrameCenter";
 import Modal from "../shared/Modal/Modal";
+import validator from "validator";
+import CenteredSplashText from "../shared/CenteredSplashText";
 
 interface Props { }
 
@@ -37,6 +39,14 @@ const Forgot: React.FunctionComponent<Props> = () => {
       });
   };
 
+  const isEmailValid = (): boolean => {
+    if (email === "") {
+      return false;
+    }
+
+    return validator.isEmail(email);
+  }
+
   return (
     <ContentFrameCenter>
       {
@@ -48,20 +58,26 @@ const Forgot: React.FunctionComponent<Props> = () => {
             <p>It provides instructions on how to regain access to your account.  It expires in 15 mins so don't dilly-dally.</p>
           </Modal> : null
       }
-      <GenericCol size={6}>
-        <Header>Email Reset</Header>
-        <form onSubmit={handleSubmit}>
-          <TextInput
-            type="text"
-            value={email}
-            onChange={handleChange}
-            placeholder="email@email.ca"
-          />
-          <SubmitInput type="submit" value="Send Email" />
-        </form>
+      <GenericCol size={5}>
+        <CenteredSplashText>
+          <Header>Email Reset</Header>
+          <form onSubmit={handleSubmit}>
+            <TextInput
+              type="text"
+              value={email}
+              onChange={handleChange}
+              placeholder="email@email.ca"
+            />
+            <SubmitInput type="submit" value="Send Email" disabled={!isEmailValid()} />
+          </form>
+
+        </CenteredSplashText>
       </GenericCol>
-      <GenericCol size={6}>
-        <h1>So you forgot your password.  It happens to the best of us.  Actually, it happens to all of us that don't use the same password for everything).</h1>
+      <GenericCol size={7}>
+        <CenteredSplashText>
+          <h1>So you forgot your password.</h1>
+          <p>It happens to the best of us.  Actually, it happens to all of us that don't use the same password for everything).</p>
+        </CenteredSplashText>
       </GenericCol>
     </ContentFrameCenter>
   );

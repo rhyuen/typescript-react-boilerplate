@@ -9,6 +9,8 @@ import RowContainer from "../shared/RowContainer";
 import StyledLink from "../shared/StyledLink";
 import Loading from "../shared/Modal/LoadingModal";
 import Modal from "../shared/Modal/Modal";
+import GenericCol from "../shared/GenericCol";
+import CenteredSplashText from "../shared/CenteredSplashText";
 
 interface Props { }
 
@@ -86,57 +88,61 @@ const Signup: React.FunctionComponent<{}> = () => {
             Your account has been created.  Click here to login <StyledLink to="/login">Login</StyledLink>
           </Modal> : null
       }
-      <TwoCol>
-        <Header>Sign up for an account.</Header>
-        <form onSubmit={handleSubmit}>
-          <TextInput
-            type="text"
-            name="email"
-            placeholder="Email"
-            onChange={handleInputChange}
-            value={formValues.email}
-          />
-          <br />
-          <TextInput
-            type="text"
-            name="first_name"
-            placeholder="First Name"
-            onChange={handleInputChange}
-            value={formValues.first_name}
-          />
-          <br />
-          <TextInput
-            type="text"
-            name="last_name"
-            placeholder="Last Name"
-            onChange={handleInputChange}
-            value={formValues.last_name}
-          />
-          <br />
-          <TextInput
-            type="password"
-            name="password"
-            placeholder="Password (16 char min.)"
-            onChange={handleInputChange}
-            value={formValues.password}
-          />
-          <br />
-          <TextInput
-            type="password"
-            name="confirmation"
-            placeholder="Password Again (16 char min.)"
-            onChange={handleInputChange}
-            value={formValues.confirmation}
-          /><br />
-          <RowContainer>
-            <SubmitInput type="submit" value="signup" />
-            <StyledLink to="/login">Already have an account?</StyledLink>
-          </RowContainer>
-        </form>
-      </TwoCol>
-      <TwoCol>
-        <h1>Be sure to choose an extra long password that you only use for this website!</h1>
-      </TwoCol>
+      <GenericCol size={6}>
+        <CenteredSplashText>
+          <Header>Sign up for an account.</Header>
+          <form onSubmit={handleSubmit}>
+            <TextInput
+              type="text"
+              name="email"
+              placeholder="Email"
+              onChange={handleInputChange}
+              value={formValues.email}
+            />
+            <br />
+            <TextInput
+              type="text"
+              name="first_name"
+              placeholder="First Name"
+              onChange={handleInputChange}
+              value={formValues.first_name}
+            />
+            <br />
+            <TextInput
+              type="text"
+              name="last_name"
+              placeholder="Last Name"
+              onChange={handleInputChange}
+              value={formValues.last_name}
+            />
+            <br />
+            <TextInput
+              type="password"
+              name="password"
+              placeholder="Password (16 char min.)"
+              onChange={handleInputChange}
+              value={formValues.password}
+            />
+            <br />
+            <TextInput
+              type="password"
+              name="confirmation"
+              placeholder="Password Again (16 char min.)"
+              onChange={handleInputChange}
+              value={formValues.confirmation}
+            /><br />
+            <RowContainer>
+              <SubmitInput type="submit" value="signup" />
+              <StyledLink to="/login">Already have an account?</StyledLink>
+            </RowContainer>
+          </form>
+        </CenteredSplashText>
+      </GenericCol>
+      <GenericCol size={6}>
+        <CenteredSplashText>
+          <h1>Be sure to choose an extra long password that you only use for this website!</h1>
+        </CenteredSplashText>
+      </GenericCol>
     </ContentFrameCenter>
   );
 };

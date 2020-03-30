@@ -3,11 +3,12 @@ import TextInput from "../shared/TextInput";
 import SubmitInput from "../shared/SubmitInput"
 import axios from "axios";
 import Header from "../shared/Header";
-import TwoCol from "../shared/TwoCol";
+import GenericCol from "../shared/GenericCol";
 import ContentFrameCenter from "../shared/ContentFrameCenter";
 import RowContainer from "../shared/RowContainer";
 import StyledLink from "../shared/StyledLink";
 import LoadingModal from "../shared/Modal/LoadingModal";
+import CenteredSplashText from "../shared/CenteredSplashText";
 
 interface Props {
   handleLogin: () => void;
@@ -62,33 +63,37 @@ const Login: React.FunctionComponent<Props> = ({ handleLogin }) => {
       {
         loading ? <LoadingModal>Checking your credentials...</LoadingModal> : null
       }
-      <TwoCol>
-        <Header>Sign in to your account.</Header>
-        <form onSubmit={handleFormSubmit}>
-          <TextInput
-            type="text"
-            name="email"
-            placeholder="email@email.ca"
-            value={credentials.email}
-            onChange={handleFormChange}
-          />
-          <br />
-          <TextInput
-            type="password"
-            name="password"
-            placeholder="password goes here."
-            value={credentials.password}
-            onChange={handleFormChange}
-          /><br />
-          <RowContainer>
-            <SubmitInput type="submit" value="Login" />
-            <StyledLink to="/forgot">Forgot your password?</StyledLink>
-          </RowContainer>
-        </form>
-      </TwoCol>
-      <TwoCol>
-        <h1>A picture goes here.</h1>
-      </TwoCol>
+      <GenericCol size={6}>
+        <CenteredSplashText>
+          <Header>Sign in to your account.</Header>
+          <form onSubmit={handleFormSubmit}>
+            <TextInput
+              type="text"
+              name="email"
+              placeholder="email@email.ca"
+              value={credentials.email}
+              onChange={handleFormChange}
+            />
+            <br />
+            <TextInput
+              type="password"
+              name="password"
+              placeholder="password goes here."
+              value={credentials.password}
+              onChange={handleFormChange}
+            /><br />
+            <RowContainer>
+              <SubmitInput type="submit" value="Login" />
+              <StyledLink to="/forgot">Forgot your password?</StyledLink>
+            </RowContainer>
+          </form>
+        </CenteredSplashText>
+      </GenericCol>
+      <GenericCol size={6}>
+        <CenteredSplashText>
+          <h1>A picture goes here.</h1>
+        </CenteredSplashText>
+      </GenericCol>
     </ContentFrameCenter>
   );
 };
