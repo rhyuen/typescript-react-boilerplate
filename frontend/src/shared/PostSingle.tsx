@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import ClickButton from "./ClickButton";
+import NoBkgdButton from "./NoBkgdButton";
 import Spacer from "./Spacer";
 
 const Post = styled.div`
@@ -17,16 +18,6 @@ interface Props {
 }
 
 
-const SmallClickButton = styled(ClickButton)`
-    padding: 5px 0px;
-    color: black;
-    border-color: transparent;
-    background: white;
-    &:hover{
-        border-bottom-color: black;
-    }
-`;
-
 
 
 const PostSingle: React.FunctionComponent<Props> = ({ children }: Props) => {
@@ -34,9 +25,9 @@ const PostSingle: React.FunctionComponent<Props> = ({ children }: Props) => {
         <Post>
             <Card>{children}</Card>
             <HorizRow>
-                <SmallClickButton>Comments</SmallClickButton>
+                <NoBkgdButton>Comments</NoBkgdButton>
                 <Spacer />
-                <SmallClickButton>Reply</SmallClickButton>
+                <NoBkgdButton>Reply</NoBkgdButton>
             </HorizRow>
         </Post>
     )

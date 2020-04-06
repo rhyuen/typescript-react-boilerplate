@@ -6,20 +6,22 @@ interface Props {
 }
 
 const XButton = styled.input`
-    width: 15px;
-    height: 15px;
-    background: black;
+    box-sizing: border-box;
     position: absolute;
     top: 10px;
     right: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0;
+    background: black;    
     color: white;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     border: 2px solid black;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 2px;
+    align-items: center;    
 
     &:hover{
         background-color: white;

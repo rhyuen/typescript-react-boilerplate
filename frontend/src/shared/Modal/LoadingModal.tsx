@@ -27,6 +27,22 @@ const Cardless = styled.div`
     font-weight: bold;
 `;
 
+const LoadingBar = styled.div`
+    box-sizing: border-box;
+    border: 2px solid white;
+    background-color: inherit;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 40px;
+`;
+const BarPartition = styled.span`
+    padding: 2px;
+    margin: 4px;
+    grid-column: span 1;
+    grid-row: span 1;
+    background: white;    
+`;
+
 
 
 const LoadingModal: React.FunctionComponent<Props> = ({ children }: Props) => {
@@ -41,10 +57,21 @@ const LoadingModal: React.FunctionComponent<Props> = ({ children }: Props) => {
         }
     }, []);
 
+
+
     return ReactDOM.createPortal(
         <GrayModal>
             <Cardless>
-                {children}
+                <LoadingBar>
+                    <BarPartition></BarPartition>
+                    <BarPartition></BarPartition>
+                    <BarPartition></BarPartition>
+                    <BarPartition></BarPartition>
+                    <BarPartition></BarPartition>
+                </LoadingBar>
+                <p>
+                    {children}
+                </p>
             </Cardless>
         </GrayModal>,
         el

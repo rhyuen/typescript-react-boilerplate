@@ -19,7 +19,8 @@
         ]
     },
     "include": [
-        "./frontend/src/**/*"
+        "./frontend/src/**/*",
+        "backend/functions/getCommentsForPost.ts"
     ],
     "exclude": [
         "/node_modules/",

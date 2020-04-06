@@ -5,7 +5,7 @@ const ClickButton = styled.button`
     background: black;
     color: white;
     text-transform: uppercase;
-    padding: 0.75rem 1rem;
+    padding: 5px;
     border-radius: 2px;
     font-size: 14px;
     font-weight: bold;    

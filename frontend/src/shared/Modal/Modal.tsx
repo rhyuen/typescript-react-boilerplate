@@ -18,7 +18,7 @@ const GrayModal = styled.section`
     height: 100vh;
     width: 100vw;
     left: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,6 +26,7 @@ const GrayModal = styled.section`
 `;
 
 const RelativeCard = styled(Card)`
+    padding: 40px;
     position: relative;
 `;
 
@@ -54,10 +55,6 @@ const Modal: React.FunctionComponent<Props> = ({ onClick, header, children, conf
                             <ModalConfirmButton type="button" onClick={onClick} value="I understand."></ModalConfirmButton>
                         </p> : null
                 }
-
-
-
-
             </RelativeCard>
         </GrayModal>,
         el

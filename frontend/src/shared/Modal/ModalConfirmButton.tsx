@@ -12,7 +12,7 @@ const ModalConfirmButton: React.FunctionComponent<Props> = styled.input<Props>`
     background: black;
     color: white;
     text-transform: uppercase;
-    padding: 5px 10px;
+    padding: 5px;
     font-size: 16px;
     font-weight: bold;
     transition: all 0.2s linear 0s;   

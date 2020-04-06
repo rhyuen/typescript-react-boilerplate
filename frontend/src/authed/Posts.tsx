@@ -13,17 +13,17 @@ interface Post {
   post_name: string;
   post_content: string;
   post_media: string;
-  post_create: string;
-  post_mod: string;
+  post_created_at: string;
+  post_modified_at: string;
   post_comments: Array<Comment>;
 }
 
 interface Comment {
   comment_id: string;
-  comment_user: string;
+  comment_username: string;
   comment_content: string;
-  comment_create: string;
-  comment_mod: string;
+  comment_created_at: string;
+  comment_modified_at: string;
 }
 
 interface State {
@@ -42,17 +42,6 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
     data: [],
     selectedPostID: ""
   });
-
-  // const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
-  //   const key = e.currentTarget.getAttribute("key");    
-  //   console.log(key);
-  //   updatePayload((ps: any) => {
-  //     return {
-  //       ...ps,
-  //       selectedPostID: key
-  //     }
-  //   })
-  // }
 
   const handlePostClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const { name } = e.currentTarget;
@@ -102,7 +91,7 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
                   return (
                     <Card key={item.post_id}>
                       <Header>{item.post_name}</Header>
-                      <SubTitle>{item.post_create}</SubTitle>
+                      <SubTitle>{item.post_created_at}</SubTitle>
                       <p>{item.post_content}</p>
                       <CommentsButton name={item.post_id} onClick={handlePostClick}>Comments: {item.post_comments.length}</CommentsButton>
                     </Card>
@@ -120,16 +109,22 @@ const Posts: React.FunctionComponent<Props> = (props: Props) => {
                 No Post Selected.<br />
                 Click a post to show some comments.
               </EmptyDisclaimer> :
-              payload.data.filter((post: Post) => (post.post_id === payload.selectedPostID))[0]
-                .post_comments.map((c: Comment) => {
-                  return (
-                    <Card key={c.comment_id}>
-                      <Header>{c.comment_user}</Header>
-                      <SubTitle>{c.comment_create}</SubTitle>
-                      <p>{c.comment_content}</p>
-                    </Card>
-                  );
-                })
+              <div>
+                {
+                  payload.data.filter((post: Post) => (post.post_id === payload.selectedPostID))[0].post_comments.length === 0
+                    ? <h1>"add a comment, jerk."</h1>
+                    : payload.data.filter((post: Post) => (post.post_id === payload.selectedPostID))[0]
+                      .post_comments.map((c: Comment) => {
+                        return (
+                          <Card key={c.comment_id}>
+                            <Header>{c.comment_username}</Header>
+                            <SubTitle>{c.comment_created_at}</SubTitle>
+                            <p>{c.comment_content}</p>
+                          </Card>
+                        );
+                      })
+                }
+              </div>
         }
       </GenericCol>
     </ContentFrame>

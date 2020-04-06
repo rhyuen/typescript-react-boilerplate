@@ -2,19 +2,22 @@ import * as React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ClickButton from "./shared/ClickButton"
+import NoBkgdButton from "./shared/NoBkgdButton";
 import Spacer from "./shared/Spacer";
 import Modal from "./shared/Modal/Modal";
 
 const StyledNav: React.FunctionComponent<{}> = styled.nav`
-  grid-column: 1 / span 14;
-  background-color: white;
-  display: flex;
+  grid-column: 2 / span 12;  
+  background-color: white;  
+  display: flex;      
   justify-content: space-between;
-  padding: 1rem 12rem;
-  align-items: center;
-  height: 5vh;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  align-items: center;  
+  height: 10vh;  
 `;
+const StyledNavSection = styled.section`  
+
+`;
+
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -60,15 +63,15 @@ const Nav: React.FunctionComponent<NavProps> = ({ handleLogout }) => {
             confirmation={false}>
             <p>Are you sure you want to leave?</p>
             <p>
-              <button onClick={handleCloseModal}>Cancel</button>
+              <NoBkgdButton onClick={handleCloseModal}>Cancel</NoBkgdButton>
               <Spacer />
               <ClickButton onClick={handleLogout}>Logout</ClickButton>
             </p>
           </Modal> : null
       }
-      <section>
+      <StyledNavSection>
         <NavSpacer>
-          <StyledLink to="/">Home</StyledLink>
+          <StyledLink to="/">LACIOS</StyledLink>
         </NavSpacer>
         <NavSpacer>
           <StyledLink to="/posts">Posts</StyledLink>
@@ -76,11 +79,11 @@ const Nav: React.FunctionComponent<NavProps> = ({ handleLogout }) => {
         <NavSpacer>
           <StyledLink to="/friends">Friends</StyledLink>
         </NavSpacer>
-      </section>
-      <section>
+      </StyledNavSection>
+      <StyledNavSection>
         <NavSpacer><Link to="/self"><ClickButton>{currUsername || "YOU"}</ClickButton></Link></NavSpacer>
-        <NavSpacer><ClickButton onClick={handleModalChange}>Logout</ClickButton></NavSpacer>
-      </section>
+        <NavSpacer><NoBkgdButton onClick={handleModalChange}>Logout</NoBkgdButton></NavSpacer>
+      </StyledNavSection>
     </StyledNav>
   );
 };
